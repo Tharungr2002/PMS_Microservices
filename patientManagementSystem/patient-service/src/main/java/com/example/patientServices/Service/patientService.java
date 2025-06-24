@@ -4,6 +4,9 @@ import com.example.patientServices.Exceptions.emailAlreadyExisting;
 import com.example.patientServices.Exceptions.patientNotAvailable;
 import com.example.patientServices.Model.Patient;
 import com.example.patientServices.Repository.patientRepository;
+import com.example.patientServices.RestConfig.restConfig;
+import com.example.patientServices.dto.billing.billingDto;
+import com.example.patientServices.dto.createPatientResDto;
 import com.example.patientServices.dto.patientRequestDto;
 import com.example.patientServices.dto.patientResponseDto;
 import com.example.patientServices.mapper.patientMapper;
@@ -18,6 +21,9 @@ import java.util.UUID;
 public class patientService {
 
     @Autowired
+    private restConfig restconfig;
+
+    @Autowired
     private patientRepository patientrepository;
 
     public List<patientResponseDto> getAllpatients() {
@@ -27,13 +33,24 @@ public class patientService {
 
     }
 
-    public patientResponseDto createPatient(patientRequestDto patientrequestdto) {
+    public createPatientResDto createPatient(patientRequestDto patientrequestdto) {
         if(patientrepository.existsByEmail(patientrequestdto.getEmail())) {
             throw new emailAlreadyExisting("Email id already exist : " +
                     patientrequestdto.getEmail());
         }
         Patient newPatient = patientrepository.save(patientMapper.createPatientMap(patientrequestdto));
-        return patientMapper.patientMapping(newPatient);
+
+        String patientId = newPatient.getId().toString();
+        String url = "http://localhost:8081/billing/"+patientId;
+
+        billingDto billingdtoresponse = restconfig.apiCall().getForObject(url, billingDto.class);
+        patientResponseDto patientresponse = patientMapper.patientMapping(newPatient);
+
+        createPatientResDto createpatientresponse = new createPatientResDto();
+        createpatientresponse.setBillingdto(billingdtoresponse);
+        createpatientresponse.setPatientresponsedto(patientresponse);
+        return createpatientresponse;
+
     }
 
     public patientResponseDto updatePatient(UUID id, patientRequestDto patientrequestdto) {
