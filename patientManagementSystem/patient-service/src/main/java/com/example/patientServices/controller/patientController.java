@@ -1,7 +1,6 @@
 package com.example.patientServices.controller;
 
 import com.example.patientServices.Service.patientService;
-import com.example.patientServices.dto.createPatientResponseDto.createPatientResDto;
 import com.example.patientServices.dto.patientRequest.patientRequestDto;
 import com.example.patientServices.dto.patinetResponse.patientResponseDto;
 import jakarta.validation.Valid;
@@ -26,8 +25,8 @@ public class patientController {
     }
 
     @PostMapping
-    public ResponseEntity<createPatientResDto> createPatient(@Valid @RequestBody patientRequestDto patientrequestdto) {
-        createPatientResDto createpatientresdto = patientservice.createPatient(patientrequestdto);
+    public ResponseEntity<patientResponseDto> createPatient(@Valid @RequestBody patientRequestDto patientrequestdto) {
+        patientResponseDto createpatientresdto = patientservice.createPatient(patientrequestdto);
         return ResponseEntity.ok().body(createpatientresdto);
     }
 
