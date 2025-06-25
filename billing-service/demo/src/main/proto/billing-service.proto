@@ -10,7 +10,7 @@ service BillingService {
 
 message BillingRequest {
   string patientId = 1;
-  double amount = 2;
+  string name = 2;
 }
 
 message BillingResponse {

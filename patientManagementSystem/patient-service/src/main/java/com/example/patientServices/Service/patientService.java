@@ -6,6 +6,7 @@ import com.example.patientServices.Model.Patient;
 import com.example.patientServices.Repository.patientRepository;
 import com.example.patientServices.dto.patientRequest.patientRequestDto;
 import com.example.patientServices.dto.patinetResponse.patientResponseDto;
+import com.example.patientServices.grpc.billingGrpcClient;
 import com.example.patientServices.mapper.patientMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,9 @@ import java.util.UUID;
 
 @Service
 public class patientService {
+
+    @Autowired
+    private billingGrpcClient billinggrcpclient;
 
     @Autowired
     private patientRepository patientrepository;
@@ -34,6 +38,9 @@ public class patientService {
         }
 
         Patient newPatient = patientrepository.save(patientMapper.createPatientMap(patientrequestdto));
+
+        System.out.println(billinggrcpclient.createBillingAccount(newPatient.getId().toString(), newPatient.getName()));
+
         return patientMapper.patientMapping(newPatient);
     }
 
