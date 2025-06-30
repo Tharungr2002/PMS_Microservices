@@ -7,6 +7,7 @@ import com.example.patientServices.Repository.patientRepository;
 import com.example.patientServices.dto.patientRequest.patientRequestDto;
 import com.example.patientServices.dto.patinetResponse.patientResponseDto;
 import com.example.patientServices.grpc.billingGrpcClient;
+import com.example.patientServices.kakfa.kakfaproducer;
 import com.example.patientServices.mapper.patientMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,8 @@ import java.util.UUID;
 
 @Service
 public class patientService {
+    @Autowired
+    private kakfaproducer Kakfaproducer;
 
     @Autowired
     private billingGrpcClient billinggrcpclient;
@@ -39,7 +42,11 @@ public class patientService {
 
         Patient newPatient = patientrepository.save(patientMapper.createPatientMap(patientrequestdto));
 
+        //grpc request
         System.out.println(billinggrcpclient.createBillingAccount(newPatient.getId().toString(), newPatient.getName()));
+
+        //kakfa to analytical services
+        Kakfaproducer.sendingToAnalyticalService(newPatient);
 
         return patientMapper.patientMapping(newPatient);
     }
