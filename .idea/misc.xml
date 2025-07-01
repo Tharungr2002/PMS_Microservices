@@ -8,6 +8,7 @@
         <option value="$PROJECT_DIR$/patientManagementSystem/patient-service/pom.xml" />
         <option value="$PROJECT_DIR$/../../analyticalserive/pom.xml" />
         <option value="$PROJECT_DIR$/analyticalserive/pom.xml" />
+        <option value="$PROJECT_DIR$/../../Api-gateway/pom.xml" />
       </list>
     </option>
   </component>
