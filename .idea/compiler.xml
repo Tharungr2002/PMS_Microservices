@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="analyticalserive" />
         <module name="demo" />
+        <module name="Auth-Service" />
       </profile>
       <profile name="Annotation profile for patientManagementSystem" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -27,6 +28,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="Api-gateway" options="-parameters" />
+      <module name="Auth-Service" options="-parameters" />
       <module name="analyticalserive" options="-parameters" />
       <module name="demo" options="-parameters" />
       <module name="patientManagementSystem" options="-parameters" />

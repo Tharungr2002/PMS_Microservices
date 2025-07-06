@@ -9,7 +9,15 @@
         <option value="$PROJECT_DIR$/../../analyticalserive/pom.xml" />
         <option value="$PROJECT_DIR$/analyticalserive/pom.xml" />
         <option value="$PROJECT_DIR$/../../Api-gateway/pom.xml" />
+        <option value="$PROJECT_DIR$/../../Auth-Service/pom.xml" />
+        <option value="$PROJECT_DIR$/Auth-Service/pom.xml" />
       </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/../../Api-gateway/pom.xml" />
+        <option value="$PROJECT_DIR$/../../Auth-Service/pom.xml" />
+      </set>
     </option>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_24" default="true" project-jdk-name="openjdk-24" project-jdk-type="JavaSDK">
