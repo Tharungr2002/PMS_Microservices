@@ -1,12 +1,12 @@
 package com.example.Auth_Service.Model;
 
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.annotation.Id;
 
+import java.util.UUID;
+
+@Table(name = "users")
 @Entity
 public class User {
     @Id

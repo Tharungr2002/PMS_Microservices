@@ -6,10 +6,11 @@ import com.example.Auth_Service.Repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-@Component
+@Service
 public class AuthService {
     @Autowired
     private UserRepo userrepo;

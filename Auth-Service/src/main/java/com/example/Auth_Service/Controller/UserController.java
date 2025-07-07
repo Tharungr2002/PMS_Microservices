@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 public class UserController {
     @Autowired
@@ -17,7 +19,7 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<LoginResDto> Login(@RequestBody LoginReqDto loginreqdto) {
 
-        optional<String> Optionaltoken = authservice.Authenticate(loginreqdto);
+        Optional<String> Optionaltoken = authservice.Authenticate(loginreqdto);
 
         if(Optionaltoken.isEmpty()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();

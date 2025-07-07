@@ -4,8 +4,11 @@ import com.example.Auth_Service.Model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface UserRepo extends JpaRepository<User,UUID> {
+import java.util.Optional;
+import java.util.UUID;
 
-    optional<User> findByEmail(String Email);
+@Repository
+public interface UserRepo extends JpaRepository<User, UUID> {
+
+    Optional<User> findByEmail(String Email);
 }
