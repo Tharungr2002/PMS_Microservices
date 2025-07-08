@@ -4,7 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/PMS.iml" filepath="$PROJECT_DIR$/.idea/PMS.iml" />
       <module fileurl="file://$PROJECT_DIR$/analyticalserive/analyticalserive.iml" filepath="$PROJECT_DIR$/analyticalserive/analyticalserive.iml" />
-      <module fileurl="file://$PROJECT_DIR$/api-gateway/api-gateway.iml" filepath="$PROJECT_DIR$/api-gateway/api-gateway.iml" />
       <module fileurl="file://$PROJECT_DIR$/patientManagementSystem/patient-service/patientManagementSystem.iml" filepath="$PROJECT_DIR$/patientManagementSystem/patient-service/patientManagementSystem.iml" />
     </modules>
   </component>

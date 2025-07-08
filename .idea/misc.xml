@@ -10,6 +10,7 @@
         <option value="$PROJECT_DIR$/analyticalserive/pom.xml" />
         <option value="$PROJECT_DIR$/../../Api-gateway/pom.xml" />
         <option value="$PROJECT_DIR$/Auth-Service/pom.xml" />
+        <option value="$PROJECT_DIR$/Api-gateway/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
