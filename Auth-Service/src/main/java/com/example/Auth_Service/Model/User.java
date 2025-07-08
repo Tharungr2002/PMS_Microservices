@@ -6,6 +6,7 @@ import lombok.*;
 
 import java.util.UUID;
 
+@NoArgsConstructor
 @Table(name = "users")
 @Entity
 public class User {
@@ -16,11 +17,13 @@ public class User {
     @Column(unique = true, nullable = false)
     public String email;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     public String password;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     public String role;
+
+
 
     public UUID getId() {
         return id;

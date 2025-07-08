@@ -22,19 +22,23 @@ public class AuthService {
     private PasswordEncoder passwordencoder;
 
     public Optional<String> Authenticate(LoginReqDto loginreqdto) {
-
-        Optional<User> ExistingUser = userrepo.findByEmail(loginreqdto.getEmail());
-        String ExistingUserPassword = ExistingUser.get().getPassword();
-        String role = ExistingUser.get().getRole();
+        String reqemail = loginreqdto.getEmail();
+        System.out.println(userrepo.findAll());
+        Optional<User> ExistingUser = userrepo.findByEmail(reqemail);
+        System.out.println(ExistingUser);
 
         String loginreqPassword = loginreqdto.getPassword();
 
         try {
-            if (ExistingUser.isPresent() && passwordencoder.matches(loginreqPassword, ExistingUserPassword)) {
-                String email = loginreqdto.getEmail();
-                String token = jwtutil.generateToken(email,role);
-                return Optional.of(token);
-            } else {
+            if (ExistingUser.isPresent()) {
+                String ExistingUserPassword = ExistingUser.get().getPassword();
+                String role = ExistingUser.get().getRole();
+                if (passwordencoder.matches(loginreqPassword, ExistingUserPassword)) {
+                    String email = loginreqdto.getEmail();
+                    String token = jwtutil.generateToken(email, role);
+                    return Optional.of(token);
+                }
+            }else {
                 new Exception("Email not found");
             }
         } catch (RuntimeException e) {

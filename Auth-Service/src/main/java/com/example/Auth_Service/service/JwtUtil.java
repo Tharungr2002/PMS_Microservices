@@ -19,7 +19,7 @@ public class JwtUtil {
                 claim("role", role).
                 issuedAt(new Date()).
                 setExpiration(new Date(System.currentTimeMillis() + 3600000)).
-                signWith(Keys.hmacShaKeyFor(SECRET_KEY.getBytes()), SignatureAlgorithm.HS256).
+                signWith(Keys.hmacShaKeyFor(SECRET_KEY.getBytes())).
                 compact();
     }
 

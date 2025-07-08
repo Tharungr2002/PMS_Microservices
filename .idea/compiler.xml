@@ -10,7 +10,7 @@
         <module name="analyticalserive" />
         <module name="demo" />
       </profile>
-      <profile name="Annotation profile for Auth-Service" enabled="true">
+      <profile name="Annotation profile for patientManagementSystem" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />

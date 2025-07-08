@@ -2,6 +2,7 @@ package com.example.Auth_Service.Controller;
 
 import com.example.Auth_Service.Dto.LoginReqDto;
 import com.example.Auth_Service.Dto.LoginResDto;
+import com.example.Auth_Service.Repository.UserRepo;
 import com.example.Auth_Service.service.AuthService;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +17,12 @@ public class UserController {
     @Autowired
     private AuthService authservice;
 
+    @Autowired
+    private UserRepo repo;
+
     @PostMapping("/login")
     public ResponseEntity<LoginResDto> Login(@RequestBody LoginReqDto loginreqdto) {
+
 
         Optional<String> Optionaltoken = authservice.Authenticate(loginreqdto);
 
