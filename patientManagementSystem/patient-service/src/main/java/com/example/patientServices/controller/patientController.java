@@ -5,6 +5,9 @@ import com.example.patientServices.dto.patientRequest.patientRequestDto;
 import com.example.patientServices.dto.patinetResponse.patientResponseDto;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,6 +43,15 @@ public class patientController {
     public ResponseEntity<Void> deletePatient(@PathVariable UUID id) {
         patientservice.deleteByID(id);
         return ResponseEntity.noContent().build();
+    }
+
+    //Search with name (For small scale products) with pageable
+    @GetMapping("/search")
+    public ResponseEntity<Page<patientResponseDto>> getByName(@RequestParam String name,
+                                              @RequestParam int pageno,
+                                              @RequestParam int size) {
+        Page<patientResponseDto> newPatient = patientservice.getByName(name,pageno,size);
+        return ResponseEntity.ok().body(newPatient);
     }
 
 

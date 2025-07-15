@@ -10,6 +10,9 @@ import com.example.patientServices.grpc.billingGrpcClient;
 import com.example.patientServices.kakfa.kakfaproducer;
 import com.example.patientServices.mapper.patientMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -66,5 +69,11 @@ public class patientService {
 
     public void deleteByID(UUID id) {
         patientrepository.deleteById(id);
+    }
+
+    public Page<patientResponseDto> getByName(String name, int pageno, int size) {
+        Pageable pageable = PageRequest.of(pageno,size);
+        Page<Patient> patients = patientrepository.findByNameContainingIgnoreCase(name,pageable);
+        return patients.map(patientMapper::patientMapping);
     }
 }
