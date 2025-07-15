@@ -46,10 +46,10 @@ public class patientService {
         Patient newPatient = patientrepository.save(patientMapper.createPatientMap(patientrequestdto));
 
         //grpc request
-        System.out.println(billinggrcpclient.createBillingAccount(newPatient.getId().toString(), newPatient.getName()));
-
-        //kakfa to analytical services
-        Kakfaproducer.sendingToAnalyticalService(newPatient);
+//        System.out.println(billinggrcpclient.createBillingAccount(newPatient.getId().toString(), newPatient.getName()));
+//
+//        //kakfa to analytical services
+//        Kakfaproducer.sendingToAnalyticalService(newPatient);
 
         return patientMapper.patientMapping(newPatient);
     }
