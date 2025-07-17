@@ -6,29 +6,23 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class Doctor {
+@NoArgsConstructor
+@Data
+public class Specialization {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
     @NotNull
-    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Specialization> specializations;
+    private String name;
 
-    @NotNull
-    private String phoneNumber;
-
-    @NotNull
-    private String yearOfExperience;
-
-    private UUID loginId;
+    @ManyToOne
+    @JoinColumn(name = "doctor_id")
+    private Doctor doctor;
 
 }

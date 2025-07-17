@@ -1,5 +1,7 @@
 package com.example.AppointmentService.dto.doctorDto;
 
+import com.example.AppointmentService.Model.Specialization;
+import com.example.AppointmentService.dto.specializationDto.specializationRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,11 +15,10 @@ public class doctorDto {
 
     private String loginId;
 
-    private List<String> specialization;
+    private List<specializationRequestDto> specializations;
 
     private String phoneNumber;
 
     private String yearOfExperience;
-
 
 }

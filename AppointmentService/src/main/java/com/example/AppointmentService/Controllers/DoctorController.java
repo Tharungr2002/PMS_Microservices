@@ -15,7 +15,8 @@ public class DoctorController {
 
 
     @PostMapping
-    public ResponseEntity<doctorDto> createDoctorDetails(@RequestHeader("X-loginId-Headers")String loginId,@Valid @RequestBody doctorDto doctordto) {
+    public ResponseEntity<doctorDto> createDoctorDetails(@RequestHeader("X-loginId-Headers")String loginId,@RequestBody doctorDto doctordto) {
+        System.out.println(doctordto.toString());
         doctorDto doctorDetail = doctorservice.storeDoctorDetails(loginId,doctordto);
         return ResponseEntity.ok().body(doctorDetail);
     }
