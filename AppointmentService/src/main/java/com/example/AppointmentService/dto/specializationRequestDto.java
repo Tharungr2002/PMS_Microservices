@@ -1,4 +1,4 @@
-package com.example.AppointmentService.dto.specializationDto;
+package com.example.AppointmentService.dto;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;

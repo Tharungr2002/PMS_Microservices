@@ -2,8 +2,8 @@ package com.example.AppointmentService.Mapper;
 
 import com.example.AppointmentService.Model.Doctor;
 import com.example.AppointmentService.Model.Specialization;
-import com.example.AppointmentService.dto.doctorDto.doctorDto;
-import com.example.AppointmentService.dto.specializationDto.specializationRequestDto;
+import com.example.AppointmentService.dto.doctorDto;
+import com.example.AppointmentService.dto.specializationRequestDto;
 
 import java.util.List;
 import java.util.UUID;

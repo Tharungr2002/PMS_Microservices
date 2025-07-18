@@ -1,7 +1,5 @@
-package com.example.AppointmentService.dto.doctorDto;
+package com.example.AppointmentService.dto;
 
-import com.example.AppointmentService.Model.Specialization;
-import com.example.AppointmentService.dto.specializationDto.specializationRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
