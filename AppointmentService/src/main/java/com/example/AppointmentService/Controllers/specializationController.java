@@ -23,5 +23,9 @@ public class specializationController {
         return ResponseEntity.ok(newSpec);
     }
 
-
+    @GetMapping("/getAll")
+    public ResponseEntity<List<specializationDbResponse>> getAll() {
+        List<specializationDbResponse> allSpec = specializationservice.getAll();
+        return ResponseEntity.ok(allSpec);
+    }
 }
