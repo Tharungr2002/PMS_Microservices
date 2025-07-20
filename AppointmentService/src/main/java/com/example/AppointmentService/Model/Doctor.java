@@ -31,6 +31,8 @@ public class Doctor {
     @NotNull
     private String yearOfExperience;
 
-    private UUID loginId;
+    private UUID loginId;           //from headers
+
+    private String name;            //from headers
 
 }

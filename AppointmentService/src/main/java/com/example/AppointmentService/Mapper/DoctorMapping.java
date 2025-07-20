@@ -12,12 +12,13 @@ import java.util.stream.Collectors;
 public class DoctorMapping {
 
 
-    public static Doctor DoctorDtoToDoctor(String loginId, doctorDto doctordto) {
+    public static Doctor DoctorDtoToDoctor(String loginId, String name, doctorDto doctordto) {
         UUID uuid = UUID.fromString(loginId);
         Doctor doctor = new Doctor();
         doctor.setPhoneNumber(doctordto.getPhoneNumber());
         doctor.setYearOfExperience(doctordto.getYearOfExperience());
         doctor.setLoginId(uuid);
+        doctor.setName(name);
 
         List<Specialization> specs = doctordto.getSpecializations().stream()
                 .map(s -> {

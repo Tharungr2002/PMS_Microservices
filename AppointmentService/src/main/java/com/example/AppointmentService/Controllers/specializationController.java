@@ -2,6 +2,7 @@ package com.example.AppointmentService.Controllers;
 
 import com.example.AppointmentService.Model.specializationDb;
 import com.example.AppointmentService.Service.specializationService;
+import com.example.AppointmentService.dto.DoctorNameResponse;
 import com.example.AppointmentService.dto.specializationDbResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -28,4 +29,6 @@ public class specializationController {
         List<specializationDbResponse> allSpec = specializationservice.getAll();
         return ResponseEntity.ok(allSpec);
     }
+
+
 }

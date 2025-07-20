@@ -2,6 +2,7 @@ package com.example.AppointmentService.Service;
 
 import com.example.AppointmentService.Model.specializationDb;
 import com.example.AppointmentService.Repository.specializationDbRepo;
+import com.example.AppointmentService.dto.DoctorNameResponse;
 import com.example.AppointmentService.dto.specializationDbResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,4 +37,5 @@ public class specializationService {
         return allSpec;
 
     }
+
 }
