@@ -64,7 +64,11 @@ public class DoctorService {
     public List<DoctorSlotCreation> createSlots(String loginId, DoctorSlotCreation doctorSlotCreation) {
         UUID loginid = UUID.fromString(loginId);
         Doctor doctor = DoctorRepository.findByLoginId(loginid);
-        System.out.println(doctor);
+
+        if(doctor == null) {
+            throw new RuntimeException("Doctor did not exists" + loginId);
+        }
+
 
         List<Slot> slots = new ArrayList<>();
 
@@ -78,8 +82,19 @@ public class DoctorService {
             slot.setStartTime(from);
             slot.setEndTime(from.plusMinutes(30));
             slots.add(slot);
-            from.minusMinutes(30);
+            from = from.plusMinutes(30);
         }
+
+        //If already slot exist just update with existing slot
+        List<Slot> existingSlot = doctor.getSlots();
+        if(existingSlot == null) {
+            existingSlot = new ArrayList<>();
+        }
+        existingSlot.addAll(slots);
+        doctor.setSlots(existingSlot);
+
+        DoctorRepository.save(doctor);
+
         List<DoctorSlotCreation> allSlots = DoctorMapping.slotToDoctorSlotCreation(slots);
 
         return allSlots;
