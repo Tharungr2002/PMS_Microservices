@@ -11,6 +11,8 @@ public interface repo extends JpaRepository<Doctor, UUID> {
 
     boolean existsByLoginId(UUID loginId);
 
+    Doctor findByLoginId(UUID loginId);
+
     void deleteByloginId(UUID loginId);
 
 }

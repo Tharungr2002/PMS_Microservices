@@ -3,6 +3,7 @@ package com.example.AppointmentService.Controllers;
 import com.example.AppointmentService.Repository.SpecializationRepo;
 import com.example.AppointmentService.Service.DoctorService;
 import com.example.AppointmentService.dto.DoctorNameResponse;
+import com.example.AppointmentService.dto.DoctorSlotCreation;
 import com.example.AppointmentService.dto.doctorDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ public class DoctorController {
     private SpecializationRepo repocheck;
 
 
+    //creating doctor by doctor or admin
     @PostMapping("/create")
     public ResponseEntity<doctorDto> createDoctorDetails(@RequestHeader("X-loginId-Headers")String loginId,
                                                          @RequestHeader("X-Name-Headers") String name ,
@@ -28,17 +30,29 @@ public class DoctorController {
         return ResponseEntity.ok().body(doctorDetail);
     }
 
+    //deleting doctor by admin or doctor
     @DeleteMapping("/delete/{loginId}")
     public ResponseEntity<Void> deleteDoctorByLoginId(@PathVariable String loginId) {
         doctorservice.deleteDoctor(loginId);
         return ResponseEntity.noContent().build();
     }
 
+    //patient is searching for doctor by specialization
     @GetMapping("/getDoctorBySpec/{specialization}")
     public ResponseEntity<List<DoctorNameResponse>> getDoctorBySpecialization(@PathVariable String specialization) {
         List<DoctorNameResponse> allSpec = doctorservice.getBySpec(specialization);
         return ResponseEntity.ok(allSpec);
     }
+
+    //Doctor is creating his slots
+    @PostMapping("/createSlot/{loginId}")
+    public ResponseEntity<List<DoctorSlotCreation>> createSlot(@PathVariable String loginId,
+                                                               @RequestBody DoctorSlotCreation doctorSlotCreation) {
+
+        List<DoctorSlotCreation> allSlots = doctorservice.createSlots(loginId,doctorSlotCreation);
+        return ResponseEntity.ok(allSlots);
+    }
+
 
 
 

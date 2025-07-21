@@ -21,24 +21,29 @@ public class patientController {
     @Autowired
     private patientService patientservice;
 
+    //get all patients by admin
     @GetMapping
     public ResponseEntity<List<patientResponseDto>> getAllpatients() {
         List<patientResponseDto> patients = patientservice.getAllpatients();
         return ResponseEntity.ok().body(patients);
     }
 
+    //creating patients by admin
     @PostMapping
     public ResponseEntity<patientResponseDto> createPatient(@Valid @RequestBody patientRequestDto patientrequestdto) {
         patientResponseDto createpatientresdto = patientservice.createPatient(patientrequestdto);
         return ResponseEntity.ok().body(createpatientresdto);
     }
 
+
+    //editing patients by admin
     @PutMapping("/{id}")
     public ResponseEntity<patientResponseDto> updatePatient(@PathVariable UUID id, @RequestBody patientRequestDto patientrequestdto) {
         patientResponseDto patientresponsedto = patientservice.updatePatient(id,patientrequestdto);
         return ResponseEntity.ok().body(patientresponsedto);
     }
 
+    //deleting patient by admin
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePatient(@PathVariable UUID id) {
         patientservice.deleteByID(id);

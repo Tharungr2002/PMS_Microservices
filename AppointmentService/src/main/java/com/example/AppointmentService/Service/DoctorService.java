@@ -2,15 +2,17 @@ package com.example.AppointmentService.Service;
 
 import com.example.AppointmentService.Mapper.DoctorMapping;
 import com.example.AppointmentService.Model.Doctor;
-import com.example.AppointmentService.Model.Specialization;
+import com.example.AppointmentService.Model.Slot;
 import com.example.AppointmentService.Repository.SpecializationRepo;
 import com.example.AppointmentService.Repository.repo;
 import com.example.AppointmentService.dto.DoctorNameResponse;
+import com.example.AppointmentService.dto.DoctorSlotCreation;
 import com.example.AppointmentService.dto.doctorDto;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -57,5 +59,29 @@ public class DoctorService {
                 }).collect(Collectors.toList());
 
         return specs;
+    }
+
+    public List<DoctorSlotCreation> createSlots(String loginId, DoctorSlotCreation doctorSlotCreation) {
+        UUID loginid = UUID.fromString(loginId);
+        Doctor doctor = DoctorRepository.findByLoginId(loginid);
+        System.out.println(doctor);
+
+        List<Slot> slots = new ArrayList<>();
+
+        LocalDateTime from  = LocalDateTime.parse(doctorSlotCreation.getStartTime());
+        LocalDateTime To = LocalDateTime.parse(doctorSlotCreation.getEndTime());
+
+        while(from.isBefore(To)) {
+            Slot slot = new Slot();
+            slot.setDoctor(doctor);
+            slot.setBookingStatus(false);
+            slot.setStartTime(from);
+            slot.setEndTime(from.plusMinutes(30));
+            slots.add(slot);
+            from.minusMinutes(30);
+        }
+        List<DoctorSlotCreation> allSlots = DoctorMapping.slotToDoctorSlotCreation(slots);
+
+        return allSlots;
     }
 }
