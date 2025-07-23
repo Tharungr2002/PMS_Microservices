@@ -5,6 +5,7 @@ import com.example.AppointmentService.Model.Doctor;
 import com.example.AppointmentService.Model.Slot;
 import com.example.AppointmentService.Repository.SpecializationRepo;
 import com.example.AppointmentService.Repository.repo;
+import com.example.AppointmentService.dto.AvailableSlots;
 import com.example.AppointmentService.dto.DoctorNameResponse;
 import com.example.AppointmentService.dto.DoctorSlotCreation;
 import com.example.AppointmentService.dto.doctorDto;
@@ -98,5 +99,14 @@ public class DoctorService {
         List<DoctorSlotCreation> allSlots = DoctorMapping.slotToDoctorSlotCreation(slots);
 
         return allSlots;
+    }
+
+    public List<AvailableSlots> returnAllSlots(String doctorName) {
+        Doctor doctor = DoctorRepository.findByname(doctorName);
+        if(doctor == null) {
+            throw new RuntimeException("Doctor did not exists");
+        }
+
+        return DoctorMapping.doctorToAvailableSlots(doctor);
     }
 }

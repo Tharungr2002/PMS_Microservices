@@ -3,6 +3,7 @@ package com.example.AppointmentService.Mapper;
 import com.example.AppointmentService.Model.Doctor;
 import com.example.AppointmentService.Model.Slot;
 import com.example.AppointmentService.Model.Specialization;
+import com.example.AppointmentService.dto.AvailableSlots;
 import com.example.AppointmentService.dto.DoctorSlotCreation;
 import com.example.AppointmentService.dto.doctorDto;
 import com.example.AppointmentService.dto.specializationRequestDto;
@@ -61,5 +62,16 @@ public class DoctorMapping {
                     return dst;
                 }).collect(Collectors.toList());
         return allSlots;
+    }
+
+    public static List<AvailableSlots> doctorToAvailableSlots(Doctor doctor) {
+        List<AvailableSlots> getAllSlots = doctor.getSlots().stream()
+                .map(s->{
+                    AvailableSlots availableSlots = new AvailableSlots();
+                    availableSlots.setStartingTime(s.getStartTime().toString());
+                    availableSlots.setEndingTime(s.getEndTime().toString());
+                    return availableSlots;
+                }).collect(Collectors.toList());
+        return getAllSlots;
     }
 }

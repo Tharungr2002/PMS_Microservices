@@ -2,6 +2,7 @@ package com.example.AppointmentService.Controllers;
 
 import com.example.AppointmentService.Repository.SpecializationRepo;
 import com.example.AppointmentService.Service.DoctorService;
+import com.example.AppointmentService.dto.AvailableSlots;
 import com.example.AppointmentService.dto.DoctorNameResponse;
 import com.example.AppointmentService.dto.DoctorSlotCreation;
 import com.example.AppointmentService.dto.doctorDto;
@@ -51,6 +52,15 @@ public class DoctorController {
 
         List<DoctorSlotCreation> allSlots = doctorservice.createSlots(loginId,doctorSlotCreation);
         return ResponseEntity.ok(allSlots);
+    }
+
+    //If patient select doctor, should return available slots.
+    @GetMapping("/getAvailSlot/{DoctorName}")
+    public ResponseEntity<List<AvailableSlots>> returnAvailableSlots(@PathVariable String DoctorName) {
+
+        List<AvailableSlots> allSlots = doctorservice.returnAllSlots(DoctorName);
+        return ResponseEntity.ok(allSlots);
+
     }
 
 

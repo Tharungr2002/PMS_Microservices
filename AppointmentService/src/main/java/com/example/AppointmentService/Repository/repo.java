@@ -15,4 +15,6 @@ public interface repo extends JpaRepository<Doctor, UUID> {
 
     void deleteByloginId(UUID loginId);
 
+    Doctor findByname(String name);
+
 }
