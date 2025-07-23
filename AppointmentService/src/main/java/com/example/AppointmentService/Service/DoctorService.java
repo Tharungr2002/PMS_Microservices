@@ -3,6 +3,7 @@ package com.example.AppointmentService.Service;
 import com.example.AppointmentService.Mapper.DoctorMapping;
 import com.example.AppointmentService.Model.Doctor;
 import com.example.AppointmentService.Model.Slot;
+import com.example.AppointmentService.Repository.SlotRepository;
 import com.example.AppointmentService.Repository.SpecializationRepo;
 import com.example.AppointmentService.Repository.repo;
 import com.example.AppointmentService.dto.AvailableSlots;
@@ -21,19 +22,21 @@ import java.util.stream.Collectors;
 
 @Service
 public class DoctorService {
+    @Autowired
+    private SlotRepository slotRepository;
 
     @Autowired
-    private repo DoctorRepository;
+    private repo doctorRepository;
 
     @Autowired
     private SpecializationRepo specializationRepo;
 
     public doctorDto storeDoctorDetails(String loginId,String name, doctorDto doctordto) {
         UUID uuid = UUID.fromString(loginId);
-        if(DoctorRepository.existsByLoginId(uuid)) {
+        if(doctorRepository.existsByLoginId(uuid)) {
             throw new RuntimeException("Doctor already exists");
         }
-        Doctor doctor= DoctorRepository.save(DoctorMapping.DoctorDtoToDoctor(loginId,name,doctordto));
+        Doctor doctor= doctorRepository.save(DoctorMapping.DoctorDtoToDoctor(loginId,name,doctordto));
         System.out.println(specializationRepo.findByDoctorId(doctor.getId()));
         return DoctorMapping.DoctorToDoctorDto(doctor);
     }
@@ -42,10 +45,10 @@ public class DoctorService {
     public void deleteDoctor(String loginId) {
         UUID loginid = UUID.fromString(loginId);
 
-        if(!DoctorRepository.existsByLoginId(loginid)) {
+        if(!doctorRepository.existsByLoginId(loginid)) {
             throw new RuntimeException("Doctor not found Error");
         }
-        DoctorRepository.deleteByloginId(loginid);
+        doctorRepository.deleteByloginId(loginid);
     }
 
 
@@ -64,7 +67,7 @@ public class DoctorService {
 
     public List<DoctorSlotCreation> createSlots(String loginId, DoctorSlotCreation doctorSlotCreation) {
         UUID loginid = UUID.fromString(loginId);
-        Doctor doctor = DoctorRepository.findByLoginId(loginid);
+        Doctor doctor = doctorRepository.findByLoginId(loginid);
 
         if(doctor == null) {
             throw new RuntimeException("Doctor did not exists" + loginId);
@@ -76,14 +79,27 @@ public class DoctorService {
         LocalDateTime from  = LocalDateTime.parse(doctorSlotCreation.getStartTime());
         LocalDateTime To = LocalDateTime.parse(doctorSlotCreation.getEndTime());
 
+
         while(from.isBefore(To)) {
-            Slot slot = new Slot();
-            slot.setDoctor(doctor);
-            slot.setBookingStatus(false);
-            slot.setStartTime(from);
-            slot.setEndTime(from.plusMinutes(30));
-            slots.add(slot);
+
+            LocalDateTime startTime = from;
+            LocalDateTime endTime = from.plusMinutes(30);
+
+            List<Slot> checkOverlap = slotRepository.findOverlap(doctor,startTime,endTime);
+
+            if(checkOverlap.isEmpty()) {
+                Slot slot = new Slot();
+                slot.setDoctor(doctor);
+                slot.setBookingStatus(false);
+                slot.setStartTime(startTime);
+                slot.setEndTime(endTime);
+                slots.add(slot);
+            }
             from = from.plusMinutes(30);
+        }
+        //if there is no slot generation
+        if(slots.isEmpty()) {
+            throw new RuntimeException("All the provided time slots are already taken.");
         }
 
         //If already slot exist just update with existing slot
@@ -94,7 +110,7 @@ public class DoctorService {
         existingSlot.addAll(slots);
         doctor.setSlots(existingSlot);
 
-        DoctorRepository.save(doctor);
+        doctorRepository.save(doctor);
 
         List<DoctorSlotCreation> allSlots = DoctorMapping.slotToDoctorSlotCreation(slots);
 
@@ -102,7 +118,7 @@ public class DoctorService {
     }
 
     public List<AvailableSlots> returnAllSlots(String doctorName) {
-        Doctor doctor = DoctorRepository.findByname(doctorName);
+        Doctor doctor = doctorRepository.findByname(doctorName);
         if(doctor == null) {
             throw new RuntimeException("Doctor did not exists");
         }

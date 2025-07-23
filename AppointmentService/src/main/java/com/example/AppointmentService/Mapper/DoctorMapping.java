@@ -3,10 +3,9 @@ package com.example.AppointmentService.Mapper;
 import com.example.AppointmentService.Model.Doctor;
 import com.example.AppointmentService.Model.Slot;
 import com.example.AppointmentService.Model.Specialization;
-import com.example.AppointmentService.dto.AvailableSlots;
-import com.example.AppointmentService.dto.DoctorSlotCreation;
-import com.example.AppointmentService.dto.doctorDto;
-import com.example.AppointmentService.dto.specializationRequestDto;
+import com.example.AppointmentService.Repository.SpecializationRepo;
+import com.example.AppointmentService.dto.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.UUID;
@@ -14,6 +13,8 @@ import java.util.stream.Collectors;
 
 public class DoctorMapping {
 
+    @Autowired
+    private SpecializationRepo specializationRepo;
 
     public static Doctor DoctorDtoToDoctor(String loginId, String name, doctorDto doctordto) {
         UUID uuid = UUID.fromString(loginId);

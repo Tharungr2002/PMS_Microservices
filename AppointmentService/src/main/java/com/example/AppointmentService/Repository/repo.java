@@ -17,4 +17,5 @@ public interface repo extends JpaRepository<Doctor, UUID> {
 
     Doctor findByname(String name);
 
+
 }
