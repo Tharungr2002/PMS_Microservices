@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public interface specializationDbRepo extends JpaRepository<specializationDb, UUID> {
+public interface SpecializationDbRepo extends JpaRepository<specializationDb, UUID> {
 
     boolean existsByName(@NotNull String name);
 }

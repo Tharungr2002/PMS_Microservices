@@ -5,7 +5,7 @@ import com.example.AppointmentService.Model.Doctor;
 import com.example.AppointmentService.Model.Slot;
 import com.example.AppointmentService.Repository.SlotRepository;
 import com.example.AppointmentService.Repository.SpecializationRepo;
-import com.example.AppointmentService.Repository.repo;
+import com.example.AppointmentService.Repository.DoctorRepository;
 import com.example.AppointmentService.dto.AvailableSlots;
 import com.example.AppointmentService.dto.DoctorNameResponse;
 import com.example.AppointmentService.dto.DoctorSlotCreation;
@@ -26,7 +26,7 @@ public class DoctorService {
     private SlotRepository slotRepository;
 
     @Autowired
-    private repo doctorRepository;
+    private DoctorRepository doctorRepository;
 
     @Autowired
     private SpecializationRepo specializationRepo;

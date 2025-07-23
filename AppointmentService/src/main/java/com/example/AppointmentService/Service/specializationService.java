@@ -1,8 +1,7 @@
 package com.example.AppointmentService.Service;
 
 import com.example.AppointmentService.Model.specializationDb;
-import com.example.AppointmentService.Repository.specializationDbRepo;
-import com.example.AppointmentService.dto.DoctorNameResponse;
+import com.example.AppointmentService.Repository.SpecializationDbRepo;
 import com.example.AppointmentService.dto.specializationDbResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +13,7 @@ import java.util.stream.Collectors;
 public class specializationService {
 
     @Autowired
-    private specializationDbRepo specializationdbrepo;
+    private SpecializationDbRepo specializationdbrepo;
 
     public specializationDb addSpecialization(specializationDb specializationdb) {
 
