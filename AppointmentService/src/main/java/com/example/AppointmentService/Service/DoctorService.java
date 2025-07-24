@@ -1,15 +1,15 @@
 package com.example.AppointmentService.Service;
 
+import com.example.AppointmentService.Enums.AppointmentStatus;
 import com.example.AppointmentService.Mapper.DoctorMapping;
+import com.example.AppointmentService.Model.Appointment;
 import com.example.AppointmentService.Model.Doctor;
 import com.example.AppointmentService.Model.Slot;
+import com.example.AppointmentService.Repository.AppointmentRepository;
 import com.example.AppointmentService.Repository.SlotRepository;
 import com.example.AppointmentService.Repository.SpecializationRepo;
 import com.example.AppointmentService.Repository.DoctorRepository;
-import com.example.AppointmentService.dto.AvailableSlots;
-import com.example.AppointmentService.dto.DoctorNameResponse;
-import com.example.AppointmentService.dto.DoctorSlotCreation;
-import com.example.AppointmentService.dto.doctorDto;
+import com.example.AppointmentService.dto.*;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,11 +17,16 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
 public class DoctorService {
+
+    @Autowired
+    private AppointmentRepository appointmentRepository;
+
     @Autowired
     private SlotRepository slotRepository;
 
@@ -124,5 +129,31 @@ public class DoctorService {
         }
 
         return DoctorMapping.doctorToAvailableSlots(doctor);
+    }
+
+    public AppointmentResponse bookAppointment(AvailableSlots availableSlots, String patientId) {
+        UUID Doctoruuid = UUID.fromString(availableSlots.getDoctorId());
+
+        Doctor doctor = doctorRepository.findById(Doctoruuid)
+                .orElseThrow(() -> new RuntimeException("Doctor not found"));
+
+        UUID Slotuuid = UUID.fromString(availableSlots.getSlotId());
+
+        Slot slot = slotRepository.findById(Slotuuid)
+                .orElseThrow(() -> new RuntimeException("slot did not found"));
+
+
+        Appointment appointment = new Appointment();
+        appointment.setDoctor(doctor);
+        appointment.setSlot(slot);
+        appointment.setPatientId(UUID.fromString(patientId));
+        appointment.setStartingTime(LocalDateTime.parse(availableSlots.getStartingTime()));
+        appointment.setEndingTime(LocalDateTime.parse(availableSlots.getEndingTime()));
+        appointment.setStatus(AppointmentStatus.CONFIRMED);
+        appointment.setBookingTime(LocalDateTime.now());
+
+        Appointment saved = appointmentRepository.save(appointment);
+
+        return DoctorMapping.returnAppointment(saved);
     }
 }

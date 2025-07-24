@@ -28,6 +28,9 @@ public class Doctor {
     @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Slot> slots;
 
+    @OneToMany(mappedBy = "doctor" , cascade = CascadeType.ALL , orphanRemoval = true)
+    private List<Appointment> appointments;
+
     @NotNull
     private String phoneNumber;
 

@@ -7,14 +7,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class AvailableSlots {
+public class AppointmentResponse {
+    private String startTime;
 
-    private String startingTime;
-
-    private String endingTime;
-
-    private String slotId;
+    private String endTime;
 
     private String doctorId;
 
+    private String appointmentId;
+
+    private String status;
 }

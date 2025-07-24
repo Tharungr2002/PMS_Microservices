@@ -1,6 +1,6 @@
 package com.example.AppointmentService.Model;
 
-
+import com.example.AppointmentService.Enums.AppointmentStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,26 +9,32 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Data
 @Entity
-@AllArgsConstructor
 @NoArgsConstructor
-public class Slot {
+@AllArgsConstructor
+@Data
+public class Appointment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    private LocalDateTime startTime;
-
-    private LocalDateTime endTime;
-
-    private boolean bookingStatus = false;
-
     @ManyToOne
     @JoinColumn(name = "doctor_id")
     private Doctor doctor;
 
-    @OneToOne(mappedBy = "slot")
-    private Appointment appointment;
+    @OneToOne
+    @JoinColumn(name = "slot_id")
+    private Slot slot;
+
+    private UUID patientId;
+
+    private LocalDateTime startingTime;
+
+    private LocalDateTime endingTime;
+
+    private LocalDateTime bookingTime;
+
+    @Enumerated(EnumType.STRING)
+    private AppointmentStatus status;
 }

@@ -2,10 +2,7 @@ package com.example.AppointmentService.Controllers;
 
 import com.example.AppointmentService.Repository.SpecializationRepo;
 import com.example.AppointmentService.Service.DoctorService;
-import com.example.AppointmentService.dto.AvailableSlots;
-import com.example.AppointmentService.dto.DoctorNameResponse;
-import com.example.AppointmentService.dto.DoctorSlotCreation;
-import com.example.AppointmentService.dto.doctorDto;
+import com.example.AppointmentService.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -63,6 +60,12 @@ public class DoctorController {
 
     }
 
+    @PostMapping("/appointment")
+    public ResponseEntity<AppointmentResponse> bookAppointment(@RequestBody AvailableSlots availableSlots,
+                                                               @RequestHeader("X-PatientId") String patientId) {
+        AppointmentResponse appointmentResponse = doctorservice.bookAppointment(availableSlots,patientId);
+        return ResponseEntity.ok(appointmentResponse);
+    }
 
 
 

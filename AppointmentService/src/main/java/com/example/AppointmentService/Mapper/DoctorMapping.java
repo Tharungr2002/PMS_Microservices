@@ -1,5 +1,6 @@
 package com.example.AppointmentService.Mapper;
 
+import com.example.AppointmentService.Model.Appointment;
 import com.example.AppointmentService.Model.Doctor;
 import com.example.AppointmentService.Model.Slot;
 import com.example.AppointmentService.Model.Specialization;
@@ -71,8 +72,21 @@ public class DoctorMapping {
                     AvailableSlots availableSlots = new AvailableSlots();
                     availableSlots.setStartingTime(s.getStartTime().toString());
                     availableSlots.setEndingTime(s.getEndTime().toString());
+                    availableSlots.setSlotId(s.getId().toString());
+                    availableSlots.setDoctorId(s.getDoctor().getId().toString());
                     return availableSlots;
                 }).collect(Collectors.toList());
         return getAllSlots;
+    }
+
+    public static AppointmentResponse returnAppointment(Appointment saved) {
+        AppointmentResponse response = new AppointmentResponse();
+
+        response.setAppointmentId(saved.getId().toString());
+        response.setDoctorId(saved.getDoctor().getId().toString());
+        response.setStatus(saved.getStatus().toString());
+        response.setStartTime(saved.getStartingTime().toString());
+        response.setEndTime(saved.getEndingTime().toString());
+        return response;
     }
 }
