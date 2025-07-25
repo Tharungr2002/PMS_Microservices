@@ -152,6 +152,9 @@ public class DoctorService {
         appointment.setStatus(AppointmentStatus.CONFIRMED);
         appointment.setBookingTime(LocalDateTime.now());
 
+        slot.setBookingStatus(true);
+        slotRepository.save(slot);
+
         Appointment saved = appointmentRepository.save(appointment);
 
         return DoctorMapping.returnAppointment(saved);
