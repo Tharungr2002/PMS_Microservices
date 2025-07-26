@@ -12,6 +12,7 @@
         <option value="$PROJECT_DIR$/Auth-Service/pom.xml" />
         <option value="$PROJECT_DIR$/Api-gateway/pom.xml" />
         <option value="$PROJECT_DIR$/AppointmentService/pom.xml" />
+        <option value="$PROJECT_DIR$/NotificationService/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

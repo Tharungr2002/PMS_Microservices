@@ -8,14 +8,16 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="analyticalserive" />
-        <module name="demo" />
         <module name="Api-gateway" />
+        <module name="NotificationService" />
+        <module name="demo" />
       </profile>
       <profile name="Annotation profile for AppointmentService" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
         </processorPath>
         <module name="patientManagementSystem" />
@@ -29,6 +31,7 @@
       <module name="Api-gateway" options="-parameters" />
       <module name="AppointmentService" options="-parameters" />
       <module name="Auth-Service" options="-parameters" />
+      <module name="NotificationService" options="-parameters" />
       <module name="analyticalserive" options="-parameters" />
       <module name="demo" options="-parameters" />
       <module name="patientManagementSystem" options="-parameters" />
