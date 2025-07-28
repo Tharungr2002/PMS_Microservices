@@ -19,13 +19,11 @@ public class Patient {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @Column(unique = true)
-    @Email
-    @NotNull
-    private String email;
-
     @NotNull
     private String name;
+
+    private String gender;
+
 
     @NotNull
     private String address;
@@ -35,4 +33,12 @@ public class Patient {
 
     @NotNull
     private LocalDate registeredDate;
+
+    private UUID loginId;   //from headers
+
+    @Column(unique = true)
+    @Email
+    @NotNull
+    private String email;   //from headers
+
 }

@@ -50,7 +50,7 @@ public class patientController {
         return ResponseEntity.noContent().build();
     }
 
-    //Search with name (For small scale products) with pageable
+    //Search with name (For small scale products) with pageable(admin)
     @GetMapping("/search")
     public ResponseEntity<Page<patientResponseDto>> getByName(@RequestParam String name,
                                               @RequestParam int pageno,

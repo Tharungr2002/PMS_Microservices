@@ -157,6 +157,8 @@ public class DoctorService {
 
         Appointment saved = appointmentRepository.save(appointment);
 
+        //Email and sms to patient
+
         return DoctorMapping.returnAppointment(saved);
     }
 }
