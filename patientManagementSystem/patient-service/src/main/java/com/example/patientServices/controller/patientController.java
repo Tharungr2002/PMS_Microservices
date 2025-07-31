@@ -1,6 +1,7 @@
 package com.example.patientServices.controller;
 
 import com.example.patientServices.Service.patientService;
+import com.example.patientServices.dto.patientRequest.PatientReqByPatient;
 import com.example.patientServices.dto.patientRequest.patientRequestDto;
 import com.example.patientServices.dto.patinetResponse.patientResponseDto;
 import jakarta.validation.Valid;
@@ -20,6 +21,16 @@ public class patientController {
 
     @Autowired
     private patientService patientservice;
+
+    //create patient by patient
+    @PostMapping("/createPatient/bypatient")
+    public ResponseEntity<patientResponseDto> createPatientBypatient(@RequestBody PatientReqByPatient patientReqByPatient,
+                                                                     @RequestHeader("X-email") String email,
+                                                                     @RequestHeader("X-loginId") String loginId,
+                                                                     @RequestHeader("X-name") String name) {
+        patientResponseDto patient = patientservice.createPatientByPatient(patientReqByPatient,email,loginId,name);
+        return ResponseEntity.ok(patient);
+    }
 
     //get all patients by admin
     @GetMapping

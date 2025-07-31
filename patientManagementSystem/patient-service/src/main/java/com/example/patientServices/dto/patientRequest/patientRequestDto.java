@@ -29,4 +29,6 @@ public class patientRequestDto {
     @NotBlank(message = "registeredDate")
     private String registeredDate;
 
+    private String gender;
+
 }

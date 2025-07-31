@@ -4,6 +4,7 @@ import com.example.patientServices.Exceptions.emailAlreadyExisting;
 import com.example.patientServices.Exceptions.patientNotAvailable;
 import com.example.patientServices.Model.Patient;
 import com.example.patientServices.Repository.patientRepository;
+import com.example.patientServices.dto.patientRequest.PatientReqByPatient;
 import com.example.patientServices.dto.patientRequest.patientRequestDto;
 import com.example.patientServices.dto.patinetResponse.patientResponseDto;
 import com.example.patientServices.grpc.billingGrpcClient;
@@ -75,5 +76,16 @@ public class patientService {
         Pageable pageable = PageRequest.of(pageno,size);
         Page<Patient> patients = patientrepository.findByNameContainingIgnoreCase(name,pageable);
         return patients.map(patientMapper::patientMapping);
+    }
+
+    public patientResponseDto createPatientByPatient(PatientReqByPatient patientReqByPatient, String email, String loginId,String name) {
+        if(patientrepository.existsByEmail(email)) {
+           throw new RuntimeException("User Already exists please use another Email Id");
+        }
+
+        Patient patient = patientrepository.save(patientMapper.PatientReqToPatient(patientReqByPatient,email,loginId,name));
+
+        return patientMapper.PatientCreateByPatient(patientReqByPatient,email,loginId,name);
+
     }
 }
