@@ -3,6 +3,7 @@ package com.example.AppointmentService.Controllers;
 import com.example.AppointmentService.Repository.SpecializationRepo;
 import com.example.AppointmentService.Service.DoctorService;
 import com.example.AppointmentService.dto.*;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -66,6 +67,23 @@ public class DoctorController {
         AppointmentResponse appointmentResponse = doctorservice.bookAppointment(availableSlots,patientId);
         return ResponseEntity.ok(appointmentResponse);
     }
+
+    @GetMapping("/get/appointment/booked")
+    public ResponseEntity<List<AppointmentBooked>> getAllAppointment(@RequestHeader("X-PatientId") String patientId) {
+
+        List<AppointmentBooked> appointmentBooked = doctorservice.GetAllBookedAppointmentByPatient(patientId);
+        return ResponseEntity.ok(appointmentBooked);
+    }
+
+
+    @PostMapping("/cancel/appointment")
+    public ResponseEntity<CancelAppointmentResponse> cancelAppointment(@RequestHeader("X-PatientId") String patientId) {
+
+        CancelAppointmentResponse response = doctorservice.CancelAppointment(patientId);
+        return ResponseEntity.ok(response);
+    }
+
+
 
 
 

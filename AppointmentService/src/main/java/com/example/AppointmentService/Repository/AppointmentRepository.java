@@ -16,7 +16,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, UUID> 
     @Query("SELECT a.patientId as patientId , a.startingTime as startTime, a.endingTime as endTime " +
     "FROM Appointment a " +
     "WHERE a.patientId = :patientId " +
-    "AND a.status = :status " +
+   "AND a.status = :status " +
     "AND (a.startingTime < :endTime AND a.endingTime > :startTime)")
     public PatientBookingConflict findbypatientIdAndstatus(UUID patientId, AppointmentStatus status , LocalDateTime startTime , LocalDateTime endTime);
 

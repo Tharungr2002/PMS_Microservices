@@ -171,4 +171,17 @@ public class DoctorService {
 
         return DoctorMapping.returnAppointment(saved);
     }
+
+    public List<AppointmentBooked> GetAllBookedAppointmentByPatient(String patientId) {
+
+        return List.of();
+    }
+
+    @Transactional
+    public CancelAppointmentResponse CancelAppointment(String patientId) {
+
+        return null;
+    }
+
+
 }
