@@ -35,7 +35,7 @@ public class UserController {
 
     @GetMapping("/validate")
     public ResponseEntity<Void> validateToken(@RequestHeader("Authorization") String token) {
-        if(!token.startsWith("Bearer ") || token == null) {
+        if( (token == null) || !token.startsWith("Bearer ") ) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
         if(authservice.validateToken(token.substring(7))) {

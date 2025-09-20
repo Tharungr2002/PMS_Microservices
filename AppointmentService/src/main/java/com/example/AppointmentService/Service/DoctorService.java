@@ -131,16 +131,26 @@ public class DoctorService {
         return DoctorMapping.doctorToAvailableSlots(doctor);
     }
 
+    @Transactional
     public AppointmentResponse bookAppointment(AvailableSlots availableSlots, String patientId) {
-        UUID Doctoruuid = UUID.fromString(availableSlots.getDoctorId());
 
+        UUID Doctoruuid = UUID.fromString(availableSlots.getDoctorId());
         Doctor doctor = doctorRepository.findById(Doctoruuid)
                 .orElseThrow(() -> new RuntimeException("Doctor not found"));
 
         UUID Slotuuid = UUID.fromString(availableSlots.getSlotId());
-
         Slot slot = slotRepository.findById(Slotuuid)
                 .orElseThrow(() -> new RuntimeException("slot did not found"));
+
+        UUID PatientUUID = UUID.fromString(patientId);
+
+        PatientBookingConflict patientBookingConflict = appointmentRepository.findbypatientIdAndstatus(PatientUUID,AppointmentStatus.CONFIRMED,LocalDateTime.parse(availableSlots.getStartingTime()),LocalDateTime.parse(availableSlots.getEndingTime()));
+
+
+        if(patientBookingConflict != null) {
+            throw new RuntimeException("You already have appointment in this time " + patientBookingConflict.getStartTime() +
+                    "to " + patientBookingConflict.getEndTime()+ " " + "has conflict");
+        }
 
 
         Appointment appointment = new Appointment();

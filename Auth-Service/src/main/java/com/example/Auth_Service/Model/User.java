@@ -2,6 +2,7 @@ package com.example.Auth_Service.Model;
 
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.util.UUID;
@@ -22,8 +23,6 @@ public class User {
 
     @Column(nullable = false)
     public String role;
-
-
 
     public UUID getId() {
         return id;

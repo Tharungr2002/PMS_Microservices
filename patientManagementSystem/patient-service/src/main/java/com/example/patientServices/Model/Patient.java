@@ -34,7 +34,7 @@ public class Patient {
     @NotNull
     private LocalDate registeredDate;
 
-    private UUID loginId;   //from headers
+    private UUID loginId;   //from headers  (not for user created by admin)
 
     @Column(unique = true)
     @Email
