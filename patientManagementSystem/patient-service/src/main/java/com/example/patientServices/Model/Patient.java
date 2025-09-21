@@ -41,4 +41,6 @@ public class Patient {
     @NotNull
     private String email;   //from headers
 
+    private String phoneNumber;
+
 }

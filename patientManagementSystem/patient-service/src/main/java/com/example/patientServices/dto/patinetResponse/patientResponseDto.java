@@ -14,4 +14,5 @@ public class patientResponseDto {
     private String id;
     private String address;
     private String dateOfBirth;
+    private String phoneNumber;
 }

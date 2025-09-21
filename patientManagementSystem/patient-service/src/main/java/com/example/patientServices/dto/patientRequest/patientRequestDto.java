@@ -16,6 +16,8 @@ public class patientRequestDto {
     @Email(message = "Should give valid email")
     private String email;
 
+    private String phoneNumber;
+
     @Size(max = 100, message = "size should under 30")
     @NotBlank(message = "Name is required")
     private String name;

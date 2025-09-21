@@ -12,6 +12,7 @@ public class patientMapper {
 
     public static patientResponseDto patientMapping(Patient patient) {
         patientResponseDto patientresponsedto = new patientResponseDto();
+        patientresponsedto.setPhoneNumber(patient.getPhoneNumber());
         patientresponsedto.setId(patient.getId().toString());
         patientresponsedto.setName(patient.getName());
         patientresponsedto.setEmail(patient.getEmail());
@@ -22,6 +23,7 @@ public class patientMapper {
 
     public static Patient createPatientMap(patientRequestDto patientrequestdto) {
         Patient patient = new Patient();
+        patient.setPhoneNumber(patientrequestdto.getPhoneNumber());
         patient.setGender(patientrequestdto.getGender());
         patient.setAddress(patientrequestdto.getAddress());
         patient.setName(patientrequestdto.getName());

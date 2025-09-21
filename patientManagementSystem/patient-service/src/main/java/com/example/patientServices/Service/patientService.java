@@ -44,7 +44,10 @@ public class patientService {
                     patientrequestdto.getEmail());
         }
 
+        System.out.println("---------------------------------------------------------------");
+
         Patient newPatient = patientrepository.save(patientMapper.createPatientMap(patientrequestdto));
+        System.out.println(newPatient.getId());
 
         //grpc request
 //        System.out.println(billinggrcpclient.createBillingAccount(newPatient.getId().toString(), newPatient.getName()));

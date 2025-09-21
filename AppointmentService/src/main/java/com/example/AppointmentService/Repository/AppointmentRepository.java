@@ -3,6 +3,7 @@ package com.example.AppointmentService.Repository;
 import com.example.AppointmentService.Enums.AppointmentStatus;
 import com.example.AppointmentService.Model.Appointment;
 import com.example.AppointmentService.dto.AppointmentBooked;
+import com.example.AppointmentService.dto.CronAptPatientNotification;
 import com.example.AppointmentService.dto.PatientBookingConflict;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -30,5 +31,14 @@ public interface AppointmentRepository extends JpaRepository<Appointment, UUID> 
     "FROM Appointment a " +
     "WHERE a.patientId = :patientId AND a.status = :status")
     public List<AppointmentBooked> findByPatientId(UUID patientId , AppointmentStatus status);
+
+
+    @Query("SELECT new com.example.AppointmentService.dto.CronAptPatientNotification (" +
+            "a.doctor.name , a.startingTime , a.patientId) " +
+    "FROM Appointment a " +
+    "WHERE :currentDay <= a.startingTime " +
+            " AND a.startingTime <= :nextDay " +
+    "AND a.status = com.example.AppointmentService.Enums.AppointmentStatus.CONFIRMED")
+    public List<CronAptPatientNotification> findAllByStartingTime(LocalDateTime currentDay, LocalDateTime nextDay);
 
 }
