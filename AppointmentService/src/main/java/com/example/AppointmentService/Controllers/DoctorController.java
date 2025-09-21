@@ -77,12 +77,12 @@ public class DoctorController {
     }
 
 
-//    @PostMapping("/cancel/appointment")
-//    public ResponseEntity<CancelAppointmentResponse> cancelAppointment(@RequestHeader("X-PatientId") String patientId) {
-//
-//        CancelAppointmentResponse response = doctorservice.CancelAppointment(patientId);
-//        return ResponseEntity.ok(response);
-//    }
+    @PostMapping("/cancel/appointment")
+    public ResponseEntity<String> cancelAppointment(@RequestBody CancelAppointmentRequest cancelAppointmentRequest) {
+
+        String response = doctorservice.CancelAppointment(cancelAppointmentRequest);
+        return ResponseEntity.ok(response);
+    }
 
 
 

@@ -181,11 +181,29 @@ public class DoctorService {
         return responseList;
     }
 
-//    @Transactional
-//    public CancelAppointmentResponse CancelAppointment(String patientId) {
-//
-//        return null;
-//    }
+    public String CancelAppointment(CancelAppointmentRequest cancelAppointmentRequest) {
+
+        String appointmentId = cancelAppointmentRequest.getAppointmentID();
+        UUID appointmentUUID = UUID.fromString(appointmentId);
+
+        Appointment appointment = appointmentRepository.findById(appointmentUUID)
+                .orElseThrow(() -> new RuntimeException("Appointment Id did not found"));
+
+        AppointmentStatus status = appointment.getStatus();
+        if(status == AppointmentStatus.CANCELLED) {
+            throw new RuntimeException("This Appointment is already cancelled");
+        }
+
+        Slot slot = appointment.getSlot();
+        slot.setBookingStatus(false);
+        slotRepository.save(slot);
+
+        appointment.setStatus(AppointmentStatus.CANCELLED);
+        appointmentRepository.save(appointment);
+
+        return "your Appointment with id : " + appointmentId + " is cancelled";
+    }
+
 
 
 }
