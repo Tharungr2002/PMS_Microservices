@@ -172,16 +172,20 @@ public class DoctorService {
         return DoctorMapping.returnAppointment(saved);
     }
 
-    public List<AppointmentBooked> GetAllBookedAppointmentByPatient(String patientId) {
+    public List<AppointmentBooked> GetAllBookedAppointmentByPatient(String patientId , String status) {
 
-        return List.of();
+        UUID PatientUUID = UUID.fromString(patientId);
+        AppointmentStatus aptStatus = AppointmentStatus.valueOf(status);
+
+        List<AppointmentBooked> responseList = appointmentRepository.findByPatientId(PatientUUID, aptStatus);
+        return responseList;
     }
 
-    @Transactional
-    public CancelAppointmentResponse CancelAppointment(String patientId) {
-
-        return null;
-    }
+//    @Transactional
+//    public CancelAppointmentResponse CancelAppointment(String patientId) {
+//
+//        return null;
+//    }
 
 
 }

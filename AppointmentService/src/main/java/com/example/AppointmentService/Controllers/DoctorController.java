@@ -1,5 +1,6 @@
 package com.example.AppointmentService.Controllers;
 
+import com.example.AppointmentService.Enums.AppointmentStatus;
 import com.example.AppointmentService.Repository.SpecializationRepo;
 import com.example.AppointmentService.Service.DoctorService;
 import com.example.AppointmentService.dto.*;
@@ -68,20 +69,20 @@ public class DoctorController {
         return ResponseEntity.ok(appointmentResponse);
     }
 
-    @GetMapping("/get/appointment/booked")
-    public ResponseEntity<List<AppointmentBooked>> getAllAppointment(@RequestHeader("X-PatientId") String patientId) {
+    @GetMapping("/get/appointment/booked/{status}")
+    public ResponseEntity<List<AppointmentBooked>> getAllAppointment(@RequestHeader("X-PatientId") String patientId ,@PathVariable String status) {
 
-        List<AppointmentBooked> appointmentBooked = doctorservice.GetAllBookedAppointmentByPatient(patientId);
+        List<AppointmentBooked> appointmentBooked = doctorservice.GetAllBookedAppointmentByPatient(patientId , status);
         return ResponseEntity.ok(appointmentBooked);
     }
 
 
-    @PostMapping("/cancel/appointment")
-    public ResponseEntity<CancelAppointmentResponse> cancelAppointment(@RequestHeader("X-PatientId") String patientId) {
-
-        CancelAppointmentResponse response = doctorservice.CancelAppointment(patientId);
-        return ResponseEntity.ok(response);
-    }
+//    @PostMapping("/cancel/appointment")
+//    public ResponseEntity<CancelAppointmentResponse> cancelAppointment(@RequestHeader("X-PatientId") String patientId) {
+//
+//        CancelAppointmentResponse response = doctorservice.CancelAppointment(patientId);
+//        return ResponseEntity.ok(response);
+//    }
 
 
 

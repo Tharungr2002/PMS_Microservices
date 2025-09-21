@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+import java.util.UUID;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -11,10 +14,10 @@ public class AppointmentBooked {
 
     private String name;
 
-    private String AppointmentID;
+    private UUID AppointmentID;
 
-    private String startingTime;
+    private LocalDateTime startingTime;
 
-    private String endingTime;
+    private LocalDateTime endingTime;
 
 }
