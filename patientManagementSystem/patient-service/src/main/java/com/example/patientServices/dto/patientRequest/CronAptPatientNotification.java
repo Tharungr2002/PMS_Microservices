@@ -1,4 +1,4 @@
-package com.example.AppointmentService.dto;
+package com.example.patientServices.dto.patientRequest;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,8 +8,8 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class CronAptPatientNotification {
 
     private String doctorName;

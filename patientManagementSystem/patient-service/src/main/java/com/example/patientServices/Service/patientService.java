@@ -4,8 +4,10 @@ import com.example.patientServices.Exceptions.emailAlreadyExisting;
 import com.example.patientServices.Exceptions.patientNotAvailable;
 import com.example.patientServices.Model.Patient;
 import com.example.patientServices.Repository.patientRepository;
+import com.example.patientServices.dto.patientRequest.CronAptPatientNotification;
 import com.example.patientServices.dto.patientRequest.PatientReqByPatient;
 import com.example.patientServices.dto.patientRequest.patientRequestDto;
+import com.example.patientServices.dto.patinetResponse.PatientContacts;
 import com.example.patientServices.dto.patinetResponse.patientResponseDto;
 import com.example.patientServices.grpc.billingGrpcClient;
 import com.example.patientServices.kakfa.kakfaproducer;
@@ -89,6 +91,16 @@ public class patientService {
         Patient patient = patientrepository.save(patientMapper.PatientReqToPatient(patientReqByPatient,email,loginId,name));
 
         return patientMapper.PatientCreateByPatient(patientReqByPatient,email,loginId,name);
+
+    }
+
+    public List<PatientContacts> getAllPatientContacts(List<CronAptPatientNotification> cronAptPatientNotification) {
+
+        List<UUID> uuids = cronAptPatientNotification.stream().map(r-> r.getPatientId()).toList();
+
+        List<PatientContacts> PatientList = patientrepository.findAllByIds(uuids);
+
+        return PatientList;
 
     }
 }

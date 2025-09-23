@@ -1,10 +1,13 @@
 package com.example.patientServices.controller;
 
 import com.example.patientServices.Service.patientService;
+import com.example.patientServices.dto.patientRequest.CronAptPatientNotification;
 import com.example.patientServices.dto.patientRequest.PatientReqByPatient;
 import com.example.patientServices.dto.patientRequest.patientRequestDto;
+import com.example.patientServices.dto.patinetResponse.PatientContacts;
 import com.example.patientServices.dto.patinetResponse.patientResponseDto;
 import jakarta.validation.Valid;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -68,6 +71,13 @@ public class patientController {
                                               @RequestParam int size) {
         Page<patientResponseDto> newPatient = patientservice.getByName(name,pageno,size);
         return ResponseEntity.ok().body(newPatient);
+    }
+
+    //get all patients phonenumber and mail by patientId
+    @PostMapping("/getAll/contacts")
+    public ResponseEntity<List<PatientContacts>> getAllPatientsContacts(@RequestBody List<CronAptPatientNotification> cronAptPatientNotification) {
+        List<PatientContacts> contacts = patientservice.getAllPatientContacts(cronAptPatientNotification);
+        return ResponseEntity.ok(contacts);
     }
 
 
