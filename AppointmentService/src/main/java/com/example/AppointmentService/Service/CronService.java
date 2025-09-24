@@ -5,6 +5,7 @@ import com.example.AppointmentService.dto.CronAptPatientNotification;
 import com.example.AppointmentService.dto.PatientContacts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.Local;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -28,6 +29,7 @@ public class CronService {
     @Autowired
     private AppointmentRepository appointmentRepository;
 
+    @Scheduled(cron = "* * * * * *")
     public void AppointmentNotification() {
 
         LocalDateTime currentDateTime = LocalDateTime.now();

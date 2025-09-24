@@ -19,7 +19,7 @@ public interface patientRepository extends JpaRepository<Patient, UUID> {
     Page<Patient> findByNameContainingIgnoreCase(String name, Pageable pageable);
 
     @Query("SELECT new com.example.patientServices.dto.patinetResponse.PatientContacts (" +
-            "p.email , p.phoneNumber , p.id )" +
+            "p.email , p.phoneNumber , p.id ) " +
     "FROM Patient p " +
     "WHERE p.id IN :uuids ")
     List<PatientContacts> findAllByIds(List<UUID> uuids);

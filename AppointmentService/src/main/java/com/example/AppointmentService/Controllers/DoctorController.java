@@ -2,6 +2,7 @@ package com.example.AppointmentService.Controllers;
 
 import com.example.AppointmentService.Enums.AppointmentStatus;
 import com.example.AppointmentService.Repository.SpecializationRepo;
+import com.example.AppointmentService.Service.CronService;
 import com.example.AppointmentService.Service.DoctorService;
 import com.example.AppointmentService.dto.*;
 import org.apache.coyote.Response;
@@ -19,6 +20,9 @@ public class DoctorController {
 
     @Autowired
     private SpecializationRepo repocheck;
+
+    @Autowired
+    private CronService cronCheck;
 
 
     //creating doctor by doctor or admin
@@ -82,6 +86,12 @@ public class DoctorController {
 
         String response = doctorservice.CancelAppointment(cancelAppointmentRequest);
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/check")
+    public Void CheckApi() {
+        cronCheck.AppointmentNotification();
+        return null;
     }
 
 
