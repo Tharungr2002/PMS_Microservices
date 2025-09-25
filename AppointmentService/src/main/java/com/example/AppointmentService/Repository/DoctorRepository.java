@@ -18,4 +18,5 @@ public interface DoctorRepository extends JpaRepository<Doctor, UUID> {
     Doctor findByname(String name);
 
 
+    boolean existsByName(String doctorName);
 }

@@ -89,4 +89,20 @@ public class DoctorMapping {
         response.setEndTime(saved.getEndingTime().toString());
         return response;
     }
+
+    public static List<AvailableSlots> getAllAvailSlots(List<Slot> allAvailableSlots) {
+
+        List<AvailableSlots> response = allAvailableSlots.stream().map(
+                s->{
+                    AvailableSlots slots = new AvailableSlots();
+                    slots.setDoctorId(s.getDoctor().getId().toString());
+                    slots.setSlotId(s.getId().toString());
+                    slots.setEndingTime(s.getEndTime().toString());
+                    slots.setStartingTime(s.getStartTime().toString());
+                    return slots;
+                }
+        ).collect(Collectors.toList());
+
+        return response;
+    }
 }

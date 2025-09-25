@@ -15,4 +15,8 @@ public interface SlotRepository extends JpaRepository<Slot, UUID> {
     @Query("select s from Slot s where s.doctor = :doctor AND" +
             "(:startTime < s.endTime AND :endTime > s.startTime)")
     List<Slot> findOverlap(Doctor doctor, LocalDateTime startTime, LocalDateTime endTime);
+
+    @Query("SELECT s from Slot s where s.doctor = :doctor AND " +
+    ":bookingStatus = s.bookingStatus ")
+    List<Slot> findByDoctorAndbookingStatus(Doctor doctor, boolean bookingStatus);
 }

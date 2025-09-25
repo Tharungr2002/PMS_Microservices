@@ -29,7 +29,7 @@ public class CronService {
     @Autowired
     private AppointmentRepository appointmentRepository;
 
-    @Scheduled(cron = "* * * * * *")
+   // @Scheduled(cron = "* * 10 * * ?")
     public void AppointmentNotification() {
 
         LocalDateTime currentDateTime = LocalDateTime.now();
@@ -56,13 +56,5 @@ public class CronService {
                     return contacts;
                 }
         ).toList();
-
-        response.forEach(System.out::println);
-
-
-
-
-
-
     }
 }

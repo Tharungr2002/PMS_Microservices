@@ -205,5 +205,16 @@ public class DoctorService {
     }
 
 
+    public List<AvailableSlots> getAllAvailableSlots(String doctorName) {
+        Doctor doctor = doctorRepository.findByname(doctorName);
+        if(doctor == null) {
+            throw new RuntimeException("Doctor did not found!!");
+        }
 
+        boolean BookingStatus = false;
+
+        List<Slot> allAvailableSlots = slotRepository.findByDoctorAndbookingStatus(doctor,BookingStatus);
+
+        return DoctorMapping.getAllAvailSlots(allAvailableSlots);
+    }
 }

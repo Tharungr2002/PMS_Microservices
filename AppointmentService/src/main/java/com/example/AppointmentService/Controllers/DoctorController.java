@@ -24,6 +24,14 @@ public class DoctorController {
     @Autowired
     private CronService cronCheck;
 
+    //return all slots of doctor. by admin
+    @GetMapping("/getAllSlot/{DoctorName}")
+    public ResponseEntity<List<AvailableSlots>> returnAllSlots(@PathVariable String DoctorName) {
+
+        List<AvailableSlots> allSlots = doctorservice.returnAllSlots(DoctorName);
+        return ResponseEntity.ok(allSlots);
+
+    }
 
     //creating doctor by doctor or admin
     @PostMapping("/create")
@@ -58,13 +66,16 @@ public class DoctorController {
     }
 
     //If patient select doctor, should return available slots.
-    @GetMapping("/getAvailSlot/{DoctorName}")
-    public ResponseEntity<List<AvailableSlots>> returnAvailableSlots(@PathVariable String DoctorName) {
+    @GetMapping("getAvailSlot/{doctorName}")
+    public ResponseEntity<List<AvailableSlots>> getAvailableSlots(@PathVariable String doctorName) {
 
-        List<AvailableSlots> allSlots = doctorservice.returnAllSlots(DoctorName);
-        return ResponseEntity.ok(allSlots);
-
+        List<AvailableSlots> slots = doctorservice.getAllAvailableSlots(doctorName);
+        return ResponseEntity.ok(slots);
     }
+
+
+
+
 
     @PostMapping("/appointment")
     public ResponseEntity<AppointmentResponse> bookAppointment(@RequestBody AvailableSlots availableSlots,
