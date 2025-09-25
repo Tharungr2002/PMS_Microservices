@@ -19,4 +19,8 @@ public interface SlotRepository extends JpaRepository<Slot, UUID> {
     @Query("SELECT s from Slot s where s.doctor = :doctor AND " +
     ":bookingStatus = s.bookingStatus ")
     List<Slot> findByDoctorAndbookingStatus(Doctor doctor, boolean bookingStatus);
+
+    @Query("SELECT s FROM Slot s WHERE s.startTime < :currentTime AND " +
+    "s.bookingStatus = :bookingStatus ")
+    List<Slot> findByCurrentTimeAndBookingStatus(LocalDateTime currentTime, boolean bookingStatus);
 }

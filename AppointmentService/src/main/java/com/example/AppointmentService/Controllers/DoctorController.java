@@ -101,7 +101,7 @@ public class DoctorController {
 
     @GetMapping("/check")
     public Void CheckApi() {
-        cronCheck.AppointmentNotification();
+        cronCheck.ClearNonBookedSlots();
         return null;
     }
 

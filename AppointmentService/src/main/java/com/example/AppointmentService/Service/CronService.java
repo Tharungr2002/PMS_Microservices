@@ -1,6 +1,8 @@
 package com.example.AppointmentService.Service;
 
+import com.example.AppointmentService.Model.Slot;
 import com.example.AppointmentService.Repository.AppointmentRepository;
+import com.example.AppointmentService.Repository.SlotRepository;
 import com.example.AppointmentService.dto.CronAptPatientNotification;
 import com.example.AppointmentService.dto.PatientContacts;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,9 @@ public class CronService {
     @Autowired
     private AppointmentRepository appointmentRepository;
 
+    @Autowired
+    private SlotRepository slotRepository;
+
    // @Scheduled(cron = "* * 10 * * ?")
     public void AppointmentNotification() {
 
@@ -56,5 +61,18 @@ public class CronService {
                     return contacts;
                 }
         ).toList();
+    }
+
+    public void ClearNonBookedSlots() {
+
+        LocalDateTime currentTime = LocalDateTime.now();
+        boolean bookingStatus = false;
+
+        List<Slot> slots = slotRepository.findByCurrentTimeAndBookingStatus(currentTime,bookingStatus);
+
+        for(Slot allSlots : slots) {
+            allSlots.setBookingStatus(true);
+        }
+        slotRepository.saveAll(slots);
     }
 }
