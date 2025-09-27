@@ -1,6 +1,7 @@
 package com.example.AppointmentService.Model;
 
 
+import com.example.AppointmentService.Enums.SlotStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,7 +24,8 @@ public class Slot {
 
     private LocalDateTime endTime;
 
-    private boolean bookingStatus = false;
+    @Enumerated(EnumType.STRING)
+    private SlotStatus slotStatus = SlotStatus.AVAILABLE;
 
     @ManyToOne
     @JoinColumn(name = "doctor_id")

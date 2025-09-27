@@ -1,5 +1,6 @@
 package com.example.AppointmentService.Service;
 
+import com.example.AppointmentService.Enums.SlotStatus;
 import com.example.AppointmentService.Model.Slot;
 import com.example.AppointmentService.Repository.AppointmentRepository;
 import com.example.AppointmentService.Repository.SlotRepository;
@@ -66,12 +67,13 @@ public class CronService {
     public void ClearNonBookedSlots() {
 
         LocalDateTime currentTime = LocalDateTime.now();
-        boolean bookingStatus = false;
 
-        List<Slot> slots = slotRepository.findByCurrentTimeAndBookingStatus(currentTime,bookingStatus);
+        List<Slot> slots = slotRepository.findByCurrentTimeAndBookingStatus(currentTime, SlotStatus.AVAILABLE);
+
+        System.out.println(slots.toString());
 
         for(Slot allSlots : slots) {
-            allSlots.setBookingStatus(true);
+            allSlots.setSlotStatus(SlotStatus.EXPIRED);
         }
         slotRepository.saveAll(slots);
     }

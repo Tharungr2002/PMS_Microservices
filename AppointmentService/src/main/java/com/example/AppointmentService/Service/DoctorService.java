@@ -1,6 +1,7 @@
 package com.example.AppointmentService.Service;
 
 import com.example.AppointmentService.Enums.AppointmentStatus;
+import com.example.AppointmentService.Enums.SlotStatus;
 import com.example.AppointmentService.Mapper.DoctorMapping;
 import com.example.AppointmentService.Model.Appointment;
 import com.example.AppointmentService.Model.Doctor;
@@ -95,7 +96,7 @@ public class DoctorService {
             if(checkOverlap.isEmpty()) {
                 Slot slot = new Slot();
                 slot.setDoctor(doctor);
-                slot.setBookingStatus(false);
+                slot.setSlotStatus(SlotStatus.AVAILABLE);
                 slot.setStartTime(startTime);
                 slot.setEndTime(endTime);
                 slots.add(slot);
@@ -139,7 +140,7 @@ public class DoctorService {
                 .orElseThrow(() -> new RuntimeException("Doctor not found"));
 
         UUID Slotuuid = UUID.fromString(availableSlots.getSlotId());
-        Slot slot = slotRepository.findById(Slotuuid)
+        Slot slot = slotRepository.findBySlotForUpdate(Slotuuid)
                 .orElseThrow(() -> new RuntimeException("slot did not found"));
 
         UUID PatientUUID = UUID.fromString(patientId);
@@ -162,7 +163,7 @@ public class DoctorService {
         appointment.setStatus(AppointmentStatus.CONFIRMED);
         appointment.setBookingTime(LocalDateTime.now());
 
-        slot.setBookingStatus(true);
+        slot.setSlotStatus(SlotStatus.BOOKED);
         slotRepository.save(slot);
 
         Appointment saved = appointmentRepository.save(appointment);
@@ -195,7 +196,7 @@ public class DoctorService {
         }
 
         Slot slot = appointment.getSlot();
-        slot.setBookingStatus(false);
+        slot.setSlotStatus(SlotStatus.CANCELLED);
         slotRepository.save(slot);
 
         appointment.setStatus(AppointmentStatus.CANCELLED);
@@ -211,9 +212,7 @@ public class DoctorService {
             throw new RuntimeException("Doctor did not found!!");
         }
 
-        boolean BookingStatus = false;
-
-        List<Slot> allAvailableSlots = slotRepository.findByDoctorAndbookingStatus(doctor,BookingStatus);
+        List<Slot> allAvailableSlots = slotRepository.findByDoctorAndbookingStatus(doctor,SlotStatus.AVAILABLE);
 
         return DoctorMapping.getAllAvailSlots(allAvailableSlots);
     }
