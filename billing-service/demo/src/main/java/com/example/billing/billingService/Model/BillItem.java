@@ -21,7 +21,5 @@ public class BillItem {
 
     private Double Amount;
 
-    @ManyToOne
-    @JoinColumn(name = "bill_id")
-    private Bill bill;
+
 }

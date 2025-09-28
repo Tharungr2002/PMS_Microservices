@@ -26,7 +26,7 @@ public class Bill {
 
     private Double TotalAmount;
 
-    private BillStatus status;
+    private BillStatus status = BillStatus.PENDING;
 
     private LocalDateTime createdAt;
 
@@ -34,7 +34,8 @@ public class Bill {
 
     private PaymentMethod paymentMethod;
 
-    @OneToMany(mappedBy = "bill" ,  cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL , orphanRemoval = true)
+    @JoinColumn(name = "bill_id")                                            //bill id created in billitem
     private List<BillItem> items;
 
 }

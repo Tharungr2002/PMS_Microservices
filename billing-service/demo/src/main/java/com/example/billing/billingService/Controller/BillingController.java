@@ -1,5 +1,6 @@
 package com.example.billing.billingService.Controller;
 
+import com.example.billing.billingService.Model.Bill;
 import com.example.billing.billingService.dto.BillCreationRequest;
 import com.example.billing.billingService.dto.BillCreationResponse;
 import com.example.billing.billingService.Service.BillingService;
@@ -16,8 +17,18 @@ public class BillingController {
 
     @PostMapping("/create")
     public ResponseEntity<BillCreationResponse> createBillForPatient(@RequestBody BillCreationRequest billCreationRequest) {
-        System.out.println(billCreationRequest.toString());
         BillCreationResponse response = billingService.createBillForPatient(billCreationRequest);
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/get/{id}")
+    public ResponseEntity<Bill> getbillByid(@PathVariable String id) {
+        Bill bill = billingService.getBillByBillId(id);
+        return ResponseEntity.ok(bill);
+    }
 }
+
+
+
+
+

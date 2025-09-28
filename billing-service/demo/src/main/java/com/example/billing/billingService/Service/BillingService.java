@@ -2,6 +2,7 @@ package com.example.billing.billingService.Service;
 
 import com.example.billing.billingService.Enum.BillStatus;
 import com.example.billing.billingService.Model.Bill;
+import com.example.billing.billingService.Repository.BillItemRepo;
 import com.example.billing.billingService.Repository.BillRepository;
 import com.example.billing.billingService.dto.BillCreationRequest;
 import com.example.billing.billingService.dto.BillCreationResponse;
@@ -21,30 +22,36 @@ public class BillingService {
     @Autowired
     private BillRepository billRepository;
 
+    @Autowired
+    private BillItemRepo billItemRepo;
+
     public BillCreationResponse createBillForPatient(BillCreationRequest billCreationRequest) {
 
         UUID patientid = UUID.fromString(billCreationRequest.getPatientid());
-
-       List<BillItem> Billitems =  billCreationRequest.getItems().stream().map(i->
-       {
-           BillItem items = new BillItem();
-           items.setAmount(i.getAmount());
-           items.setDescription(i.getDescription());
-           return items;
-       }).collect(Collectors.toList());
-
         Double TotalAmount = billCreationRequest.getItems().stream().mapToDouble(c->c.getAmount()).sum();
+
+        List<BillItem> BillIntems =BillMapper.billRequestToBill(patientid,billCreationRequest.getItems());
+        billItemRepo.saveAll(BillIntems);
+
 
         Bill bill = new Bill();
         bill.setPatientid(patientid.toString());
         bill.setCreatedAt(LocalDateTime.now());
-        bill.setItems(Billitems);
         bill.setStatus(BillStatus.PENDING);
         bill.setTotalAmount(TotalAmount);
+        bill.setItems(BillIntems);
+        Bill finalbill = billRepository.save(bill);
 
-        Bill billing = billRepository.save(bill);
+        return BillMapper.createBillMapperToResponse(finalbill);
 
-        return BillMapper.createBillMapper(billing.getId(),billing.getCreatedAt(),billing.getTotalAmount(),billing.getStatus(),billCreationRequest.getItems());
+    }
 
+    public Bill getBillByBillId(String id) {
+
+        UUID billUUID = UUID.fromString(id);
+
+        Bill bill = billRepository.findById(billUUID).orElseThrow(()->  new RuntimeException("Bill does not found"));
+
+        return bill;
     }
 }
