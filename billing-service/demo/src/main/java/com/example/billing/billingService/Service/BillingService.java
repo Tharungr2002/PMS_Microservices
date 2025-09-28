@@ -1,20 +1,22 @@
 package com.example.billing.billingService.Service;
 
 import com.example.billing.billingService.Enum.BillStatus;
+import com.example.billing.billingService.Enum.PaymentMethod;
 import com.example.billing.billingService.Model.Bill;
 import com.example.billing.billingService.Repository.BillItemRepo;
 import com.example.billing.billingService.Repository.BillRepository;
 import com.example.billing.billingService.dto.BillCreationRequest;
 import com.example.billing.billingService.dto.BillCreationResponse;
 import com.example.billing.billingService.Model.BillItem;
+import com.example.billing.billingService.dto.patientBill;
 import com.example.billing.billingService.mapper.BillMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 public class BillingService {
@@ -53,5 +55,27 @@ public class BillingService {
         Bill bill = billRepository.findById(billUUID).orElseThrow(()->  new RuntimeException("Bill does not found"));
 
         return bill;
+    }
+
+    public List<patientBill> getAllBillForPatients(String patientid) {
+
+        List<patientBill> billIds = billRepository.findAllBillByPatient(patientid);
+
+        return billIds;
+    }
+
+    public Bill updateBill(String billId, String method) {
+
+        UUID billUUID = UUID.fromString(billId);
+        Bill bill = billRepository.findById(billUUID).orElseThrow(()-> new RuntimeException("bill does not exists"));
+
+        PaymentMethod paymethod = PaymentMethod.valueOf(method);
+
+        bill.setPaidAt(LocalDateTime.now());
+        bill.setStatus(BillStatus.COMPLETED);
+        bill.setPaymentMethod(paymethod);
+
+        return billRepository.save(bill);
+
     }
 }
