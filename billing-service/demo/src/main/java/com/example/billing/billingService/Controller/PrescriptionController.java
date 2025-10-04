@@ -21,8 +21,9 @@ public class PrescriptionController {
     public ResponseEntity<PrescriptionResponse> createPrescription(@RequestBody List<PrescriptionRequest> prescriptionRequest ,
                                                                          @RequestHeader("X-PatientId") String patientid ,
                                                                          @RequestHeader("X-DoctorId") String doctorId ) {
-        System.out.println("=----------------" + prescriptionRequest.toString());
             PrescriptionResponse response = prescriptionService.createPrescription(patientid,doctorId,prescriptionRequest);
             return ResponseEntity.ok(response);
     }
+
+
 }

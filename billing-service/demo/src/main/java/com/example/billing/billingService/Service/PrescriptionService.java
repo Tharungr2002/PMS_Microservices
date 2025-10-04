@@ -38,12 +38,12 @@ public class PrescriptionService {
             prescription.setItems(prescriptionItems);
             prescription.setDoctorId(doctorId);
             prescription.setPatientId(patientid);
+            prescription.setCreatedAt(LocalDateTime.now().toString());
             prescriptionRepository.save(prescription);
 
             PrescriptionResponse response = new PrescriptionResponse();
             response.setStatus(PrescriptionStatus.SUCCESS);
             response.setPrescription(prescription);
-            response.setCreatedAt(LocalDateTime.now().toString());
             return response;
         }catch(Exception e){
             throw new RuntimeException("Failed to create Prescripton" , e);

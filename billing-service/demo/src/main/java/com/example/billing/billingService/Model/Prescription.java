@@ -27,5 +27,7 @@ public class Prescription {
     @JoinColumn(name = "Prescription_id")
     private List<PrescriptionItem> items;
 
+    private String createdAt;
+
 
 }

@@ -25,4 +25,6 @@ public class Medicine {
     private String description;
 
     private Double price;
+
+    private int stockAvailable;
 }

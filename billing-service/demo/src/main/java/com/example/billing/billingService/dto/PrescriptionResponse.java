@@ -18,6 +18,6 @@ public class PrescriptionResponse {
 
     private Prescription prescription;
 
-    private String createdAt;
+
 
 }
