@@ -16,4 +16,6 @@ public interface BillRepository extends JpaRepository<Bill, UUID> {
             "FROM Bill b " +
             "WHERE b.patientid = :patientUUID ")
     List<patientBill> findAllBillByPatient(String patientUUID);
+
+    List<Bill> findAllByPrescriptionId(String prescriptionId);
 }

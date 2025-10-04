@@ -17,6 +17,8 @@ public class BillItem {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
+    private String type;
+
     private String Description;
 
     private Double Amount;

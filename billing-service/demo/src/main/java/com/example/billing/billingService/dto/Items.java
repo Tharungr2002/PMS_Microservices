@@ -11,6 +11,8 @@ public class Items {
 
     private String Description;
 
+    private String type;
+
     private Double Amount;
 
     private int quantity;

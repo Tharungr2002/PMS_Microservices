@@ -42,6 +42,13 @@ public class BillingController {
         Bill bill = billingService.updateBill(billId,method);
         return ResponseEntity.ok(bill);
     }
+
+    @GetMapping("/get/billforprescription/{prescriptionId}")
+    public ResponseEntity<List<Bill>> getAllBillForPrescription(@PathVariable String prescriptionId) {
+
+        List<Bill> AllBills = billingService.getAllBills(prescriptionId);
+        return ResponseEntity.ok(AllBills);
+    }
 }
 
 

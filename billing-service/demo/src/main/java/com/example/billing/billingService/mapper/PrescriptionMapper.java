@@ -13,6 +13,7 @@ public class PrescriptionMapper {
 
                     PrescriptionItem prescriptionItem = new PrescriptionItem();
 
+                    prescriptionItem.setType(P.getType());
                     prescriptionItem.setItemId(P.getItemId());
                     prescriptionItem.setName(P.getMedicineName());
                     prescriptionItem.setQuantity(P.getQuantity());

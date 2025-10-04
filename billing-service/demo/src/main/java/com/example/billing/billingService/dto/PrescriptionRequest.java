@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class PrescriptionRequest {
 
+    private String type;
+
     private String medicineName;
 
     private String Dosage;
