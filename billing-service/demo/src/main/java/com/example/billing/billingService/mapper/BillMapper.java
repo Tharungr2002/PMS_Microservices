@@ -18,6 +18,9 @@ public class BillMapper {
 
         List<BillItem> billItem = items.stream().map(i->{
                     BillItem billing = new BillItem();
+                    billing.setName(i.getName());
+                    billing.setQuantity(i.getQuantity());
+                    billing.setMedicineId(i.getMedicineId());
                     billing.setDescription(i.getDescription());
                     billing.setAmount(i.getAmount());
                     return billing;
@@ -36,6 +39,9 @@ public class BillMapper {
 
         List<Items> items = bill.getItems().stream().map(i->{
             Items item = new Items();
+            item.setQuantity(i.getQuantity());
+            item.setMedicineId(i.getMedicineId());
+            item.setName(i.getName());
             item.setAmount(i.getAmount());
             item.setDescription(i.getDescription());
             return item;

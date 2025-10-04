@@ -38,4 +38,6 @@ public class Bill {
     @JoinColumn(name = "bill_id")                                            //bill id created in billitem
     private List<BillItem> items;
 
+    private String prescriptionId;
+
 }

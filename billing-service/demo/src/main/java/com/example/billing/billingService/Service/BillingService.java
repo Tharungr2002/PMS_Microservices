@@ -30,13 +30,14 @@ public class BillingService {
     public BillCreationResponse createBillForPatient(BillCreationRequest billCreationRequest) {
 
         UUID patientid = UUID.fromString(billCreationRequest.getPatientid());
-        Double TotalAmount = billCreationRequest.getItems().stream().mapToDouble(c->c.getAmount()).sum();
+        Double TotalAmount = billCreationRequest.getItems().stream().mapToDouble(c->c.getAmount()*c.getQuantity()).sum();
 
         List<BillItem> BillIntems =BillMapper.billRequestToBill(patientid,billCreationRequest.getItems());
         billItemRepo.saveAll(BillIntems);
 
 
         Bill bill = new Bill();
+        bill.setPrescriptionId(billCreationRequest.getPrescriptionId());
         bill.setPatientid(patientid.toString());
         bill.setCreatedAt(LocalDateTime.now());
         bill.setStatus(BillStatus.PENDING);

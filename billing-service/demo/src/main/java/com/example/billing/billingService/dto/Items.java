@@ -12,4 +12,10 @@ public class Items {
     private String Description;
 
     private Double Amount;
+
+    private int quantity;
+
+    private String medicineId;
+
+    private String name;
 }

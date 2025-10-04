@@ -12,7 +12,10 @@ import java.util.UUID;
 @Data
 public class BillCreationRequest {
 
+    private String prescriptionId;
+
     private String patientid;
 
     private List<Items> items;
+
 }
