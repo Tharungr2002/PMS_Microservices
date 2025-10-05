@@ -20,8 +20,9 @@ public class PrescriptionController {
     @PostMapping("/create")
     public ResponseEntity<PrescriptionResponse> createPrescription(@RequestBody List<PrescriptionRequest> prescriptionRequest ,
                                                                          @RequestHeader("X-PatientId") String patientid ,
-                                                                         @RequestHeader("X-DoctorId") String doctorId ) {
-            PrescriptionResponse response = prescriptionService.createPrescription(patientid,doctorId,prescriptionRequest);
+                                                                         @RequestHeader("X-DoctorId") String doctorId ,
+                                                                   @RequestHeader("X-AppointmentId") String appointmentId) {
+            PrescriptionResponse response = prescriptionService.createPrescription(patientid,doctorId,prescriptionRequest,appointmentId);
             return ResponseEntity.ok(response);
     }
 

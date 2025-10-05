@@ -23,22 +23,22 @@ public class PrescriptionService {
     @Autowired
     private PrescriptionRepository prescriptionRepository;
 
-    public PrescriptionResponse createPrescription(String patientid, String doctorId, List<PrescriptionRequest> prescriptionRequest) {
+    public PrescriptionResponse createPrescription(String patientid, String doctorId, List<PrescriptionRequest> prescriptionRequest, String appointmentId) {
 
         try {
+            if(prescriptionRepository.existsByAppointmentId(appointmentId)) {
+                throw new RuntimeException("Prescription Already Found!");
+            }
 
             List<PrescriptionItem> prescriptionItems = PrescriptionMapper.presReqToPresItems(prescriptionRequest);
             prescriptionItemRepository.saveAll(prescriptionItems);
-
-//            if(prescriptionRepository.existByPatientIdAndDoctorIdAndItems(patientid,doctorId ,prescriptionItems)) {
-//                throw new RuntimeException("Prescription already exist");
-//            }
 
             Prescription prescription = new Prescription();
             prescription.setItems(prescriptionItems);
             prescription.setDoctorId(doctorId);
             prescription.setPatientId(patientid);
             prescription.setCreatedAt(LocalDateTime.now().toString());
+            prescription.setAppointmentId(appointmentId);
             prescriptionRepository.save(prescription);
 
             PrescriptionResponse response = new PrescriptionResponse();

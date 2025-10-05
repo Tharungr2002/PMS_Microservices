@@ -11,4 +11,7 @@ import java.util.UUID;
 
 @Repository
 public interface PrescriptionRepository extends JpaRepository<Prescription, UUID> {
+
+
+    boolean existsByAppointmentId(String appointmentId);
 }

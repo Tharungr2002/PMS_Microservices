@@ -18,6 +18,7 @@ public class Prescription {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
+    private String appointmentId;
 
     private String patientId;
 
