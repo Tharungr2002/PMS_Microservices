@@ -23,6 +23,10 @@ public class BodyCheckService {
     public List<BodyCheck> createBodyCheck(List<BodyCheckdto> bodyCheckdto) {
 
         List<BodyCheck> bodyCheckList = bodyCheckdto.stream().map(b->{
+
+            if(bodyCheckRepository.existsByName(b.getName())) {
+                throw new RuntimeException("body check :" + " " + b.getName() + "already found" );
+            }
             BodyCheck bodyCheck =new BodyCheck();
             bodyCheck.setDescription(b.getDescription());
             bodyCheck.setName(b.getName());

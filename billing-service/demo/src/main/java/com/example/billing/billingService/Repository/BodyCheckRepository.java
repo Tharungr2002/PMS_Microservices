@@ -10,4 +10,5 @@ import java.util.UUID;
 @Repository
 public interface BodyCheckRepository extends JpaRepository<BodyCheck, UUID> {
 
+    boolean existsByName(String name);
 }

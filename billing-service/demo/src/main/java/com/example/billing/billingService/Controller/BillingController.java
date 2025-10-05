@@ -20,8 +20,9 @@ public class BillingController {
     private BillingService billingService;
 
     @PostMapping("/create")
-    public ResponseEntity<BillCreationResponse> createBillForPatient(@RequestBody BillCreationRequest billCreationRequest) {
-        BillCreationResponse response = billingService.createBillForPatient(billCreationRequest);
+    public ResponseEntity<BillCreationResponse> createBillForPatient(@RequestBody BillCreationRequest billCreationRequest,
+                                                                     @RequestHeader("X-prescriptionId") String prescriptionId) {
+        BillCreationResponse response = billingService.createBillForPatient(billCreationRequest,prescriptionId);
         return ResponseEntity.ok(response);
     }
 

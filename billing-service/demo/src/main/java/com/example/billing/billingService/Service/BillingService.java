@@ -2,24 +2,24 @@ package com.example.billing.billingService.Service;
 
 import com.example.billing.billingService.Enum.BillStatus;
 import com.example.billing.billingService.Enum.PaymentMethod;
-import com.example.billing.billingService.Model.Bill;
-import com.example.billing.billingService.Model.Medicine;
-import com.example.billing.billingService.Repository.BillItemRepo;
-import com.example.billing.billingService.Repository.BillRepository;
-import com.example.billing.billingService.Repository.MedicineRepository;
+import com.example.billing.billingService.Model.*;
+import com.example.billing.billingService.Repository.*;
 import com.example.billing.billingService.dto.BillCreationRequest;
 import com.example.billing.billingService.dto.BillCreationResponse;
-import com.example.billing.billingService.Model.BillItem;
 import com.example.billing.billingService.dto.Items;
 import com.example.billing.billingService.dto.patientBill;
 import com.example.billing.billingService.mapper.BillMapper;
+import com.google.j2objc.annotations.AutoreleasePool;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class BillingService {
@@ -28,19 +28,52 @@ public class BillingService {
     private BillRepository billRepository;
 
     @Autowired
+    private PrescriptionRepository prescriptionRepository;
+
+    @Autowired
     private BillItemRepo billItemRepo;
 
     @Autowired
     private MedicineRepository medicineRepository;
 
-    public BillCreationResponse createBillForPatient(BillCreationRequest billCreationRequest) {
+    @Autowired
+    private PrescriptionItemRepository prescriptionItemRepository;
+
+    @Transactional
+    public BillCreationResponse createBillForPatient(BillCreationRequest billCreationRequest, String prescriptionId) {
 
         UUID patientid = UUID.fromString(billCreationRequest.getPatientid());
-        Double TotalAmount = billCreationRequest.getItems().stream().mapToDouble(c->c.getAmount()*c.getQuantity()).sum();
 
-        List<BillItem> BillIntems =BillMapper.billRequestToBill(patientid,billCreationRequest.getItems());
+        Prescription prescription = prescriptionRepository.findById(UUID.fromString(prescriptionId))
+                .orElseThrow(() -> new RuntimeException("Prescription not found"));
+
+        //from db
+        List<PrescriptionItem> prescriptionItems = prescription.getItems();
+
+        //from db convert to map
+        Map<String, PrescriptionItem> prescriptionItemMap = prescriptionItems.stream()
+                .collect(Collectors.toMap(PrescriptionItem::getItemId , prescriptionItem-> prescriptionItem));
+
+        //from request
+        List<Items> items = billCreationRequest.getItems();
+
+        //duplicate check if not make them true
+        List<PrescriptionItem>  presItem = items.stream().map(i->{
+            PrescriptionItem item =  prescriptionItemMap.get(i.getMedicineId());
+
+            if(item.isBillCreated()) {
+                throw new RuntimeException("Bill is already created for this " + i.getName() );
+            }
+            item.setBillCreated(true);
+            return item;
+        }).toList();
+
+        prescriptionItemRepository.saveAll(presItem);
+
+        List<BillItem> BillIntems =BillMapper.billRequestToBill(patientid,billCreationRequest.getItems() );
         billItemRepo.saveAll(BillIntems);
 
+        Double TotalAmount = billCreationRequest.getItems().stream().mapToDouble(c->c.getAmount()*c.getQuantity()).sum();
 
         Bill bill = new Bill();
         bill.setPrescriptionId(billCreationRequest.getPrescriptionId());
@@ -75,6 +108,10 @@ public class BillingService {
 
         UUID billUUID = UUID.fromString(billId);
         Bill bill = billRepository.findById(billUUID).orElseThrow(()-> new RuntimeException("bill does not exists"));
+
+        if(bill.getStatus() == BillStatus.COMPLETED) {
+            throw new RuntimeException("Already payment complted for this bill!");
+        }
 
         PaymentMethod paymethod = PaymentMethod.valueOf(method);
 

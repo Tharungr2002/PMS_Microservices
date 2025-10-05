@@ -24,6 +24,10 @@ public class MedicineService {
 
         List<Medicine> ListMedicine = addMedicineDto.stream().map(
                 m->{
+                    if(medicineRepository.existsByName(m.getName())) {
+                        throw new RuntimeException("Medicine :" + " " + m.getName() + "already found" );
+                    }
+
                     Medicine medicine = new Medicine();
                     medicine.setStockAvailable(m.getStockAvailable());
                     medicine.setDescription(m.getDescription());

@@ -27,4 +27,7 @@ public class PrescriptionItem {
 
     private String dosage;
 
+    @Column(name = "bill_created", nullable = false)
+    private boolean billCreated;
+
 }

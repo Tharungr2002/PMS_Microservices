@@ -3,6 +3,7 @@ package com.example.billing.billingService.mapper;
 import com.example.billing.billingService.Enum.BillStatus;
 import com.example.billing.billingService.Model.Bill;
 import com.example.billing.billingService.Model.BillItem;
+import com.example.billing.billingService.Model.PrescriptionItem;
 import com.example.billing.billingService.dto.BillCreationResponse;
 import com.example.billing.billingService.dto.Items;
 
