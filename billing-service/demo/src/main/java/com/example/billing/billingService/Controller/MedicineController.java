@@ -1,6 +1,6 @@
 package com.example.billing.billingService.Controller;
 
-import com.example.billing.billingService.Elastic.ElasticMedicine;
+import com.example.billing.billingService.Elastic.ElasticModel.ElasticMedicine;
 import com.example.billing.billingService.Model.Medicine;
 import com.example.billing.billingService.Service.MedicineService;
 import com.example.billing.billingService.dto.AddMedicineDto;

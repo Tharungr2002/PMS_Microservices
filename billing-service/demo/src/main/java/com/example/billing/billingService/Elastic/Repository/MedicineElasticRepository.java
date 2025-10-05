@@ -1,7 +1,6 @@
 package com.example.billing.billingService.Elastic.Repository;
 
-import com.example.billing.billingService.Elastic.ElasticMedicine;
-import com.example.billing.billingService.Model.Medicine;
+import com.example.billing.billingService.Elastic.ElasticModel.ElasticMedicine;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 import org.springframework.data.elasticsearch.annotations.Query;
 
@@ -10,6 +9,6 @@ import java.util.UUID;
 
 public interface MedicineElasticRepository extends ElasticsearchRepository<ElasticMedicine, UUID>{
 
-    @Query("{\"match_phrase_prefix\": {\"name\": \"?0\"}}")
+    @Query("{\"wildcard\": {\"name\": {\"value\": \"*?0*\"}}}")
     List<ElasticMedicine> findByName(String name);
 }

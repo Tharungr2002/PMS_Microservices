@@ -1,6 +1,6 @@
 package com.example.billing.billingService.Service;
 
-import com.example.billing.billingService.Elastic.ElasticMedicine;
+import com.example.billing.billingService.Elastic.ElasticModel.ElasticMedicine;
 import com.example.billing.billingService.Elastic.Repository.MedicineElasticRepository;
 import com.example.billing.billingService.Model.Medicine;
 import com.example.billing.billingService.Repository.MedicineRepository;

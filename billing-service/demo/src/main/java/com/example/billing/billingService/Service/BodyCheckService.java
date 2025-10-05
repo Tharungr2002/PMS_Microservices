@@ -1,5 +1,7 @@
 package com.example.billing.billingService.Service;
 
+import com.example.billing.billingService.Elastic.ElasticModel.ElasticBodyCheck;
+import com.example.billing.billingService.Elastic.Repository.BodyCheckElasticRepository;
 import com.example.billing.billingService.Model.BodyCheck;
 import com.example.billing.billingService.Repository.BodyCheckRepository;
 import com.example.billing.billingService.dto.BodyCheckdto;
@@ -15,6 +17,9 @@ public class BodyCheckService {
     @Autowired
     private BodyCheckRepository bodyCheckRepository;
 
+    @Autowired
+    private BodyCheckElasticRepository bodyCheckElasticRepository;
+
     public List<BodyCheck> createBodyCheck(List<BodyCheckdto> bodyCheckdto) {
 
         List<BodyCheck> bodyCheckList = bodyCheckdto.stream().map(b->{
@@ -25,8 +30,25 @@ public class BodyCheckService {
             return bodyCheck;
         }).collect(Collectors.toList());
 
-        bodyCheckRepository.saveAll(bodyCheckList);
+        List<BodyCheck> response = bodyCheckRepository.saveAll(bodyCheckList);
 
-        return bodyCheckList;
+        List<ElasticBodyCheck> BodyCheckList = response.stream().map(b->{
+            ElasticBodyCheck es = new ElasticBodyCheck();
+
+            es.setDescription(b.getDescription());
+            es.setId(b.getId());
+            es.setPrice(b.getPrice());
+            es.setName(b.getName());
+            return es;
+        }).collect(Collectors.toList());
+
+        bodyCheckElasticRepository.saveAll(BodyCheckList);
+
+        return response;
+    }
+
+    public List<ElasticBodyCheck> searchBodyCheck(String name) {
+
+        return bodyCheckElasticRepository.findByName(name);
     }
 }

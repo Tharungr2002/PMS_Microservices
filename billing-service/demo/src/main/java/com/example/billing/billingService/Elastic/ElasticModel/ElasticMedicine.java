@@ -1,4 +1,4 @@
-package com.example.billing.billingService.Elastic;
+package com.example.billing.billingService.Elastic.ElasticModel;
 
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
