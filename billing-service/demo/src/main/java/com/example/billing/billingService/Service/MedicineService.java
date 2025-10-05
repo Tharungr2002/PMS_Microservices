@@ -50,4 +50,9 @@ public class MedicineService {
 
         return savedMedicines;
     }
+
+    public List<ElasticMedicine> getAllMedicine(String name) {
+
+        return medicineElasticRepository.findByName(name.toLowerCase());
+    }
 }
