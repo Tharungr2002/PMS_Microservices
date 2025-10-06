@@ -60,10 +60,9 @@ public class BillingService {
         //duplicate check if not make them true
         List<PrescriptionItem>  presItem = items.stream().map(i->{
             PrescriptionItem item =  prescriptionItemMap.get(i.getMedicineId());
+            if(item == null) {throw new RuntimeException("Invalid medicineId: " + i.getMedicineId()); }
 
-            if(item.isBillCreated()) {
-                throw new RuntimeException("Bill is already created for this " + i.getName() );
-            }
+            if(item.isBillCreated()) {throw new RuntimeException("Bill is already created for this " + i.getName());}
             item.setBillCreated(true);
             return item;
         }).toList();

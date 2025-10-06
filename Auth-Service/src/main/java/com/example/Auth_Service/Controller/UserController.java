@@ -2,6 +2,7 @@ package com.example.Auth_Service.Controller;
 
 import com.example.Auth_Service.Dto.LoginReqDto;
 import com.example.Auth_Service.Dto.LoginResDto;
+import com.example.Auth_Service.Dto.SignupDto;
 import com.example.Auth_Service.Repository.UserRepo;
 import com.example.Auth_Service.service.AuthService;
 import lombok.Getter;
@@ -19,6 +20,12 @@ public class UserController {
 
     @Autowired
     private UserRepo repo;
+
+    //only for patients
+    @PostMapping("/signup")
+    public ResponseEntity<String> Signup(@RequestBody SignupDto signupDto) {
+        return ResponseEntity.ok(authservice.signupuser(signupDto));
+    }
 
     @PostMapping("/login")
     public ResponseEntity<LoginResDto> Login(@RequestBody LoginReqDto loginreqdto) {
