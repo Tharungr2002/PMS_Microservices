@@ -62,6 +62,9 @@ public class AuthService {
 
     public String signupuser(SignupDto signupDto) {
         try {
+            if(userrepo.existsByEmail(signupDto.getEmail())) {
+                throw new RuntimeException("Email already exists!!");
+            }
             String encodedPassword = passwordencoder.encode(signupDto.getPassword());
             User user = new User();
             user.setEmail(signupDto.getEmail());
