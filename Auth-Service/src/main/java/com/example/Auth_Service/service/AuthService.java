@@ -66,7 +66,9 @@ public class AuthService {
             User user = new User();
             user.setEmail(signupDto.getEmail());
             user.setPassword(encodedPassword);
-            user.setUserRole(role.USER);
+
+            role userRole = role.valueOf(signupDto.getRole().toUpperCase());
+            user.setUserRole(userRole);
             userrepo.save(user);
         } catch (RuntimeException e) {
             throw new RuntimeException(e);

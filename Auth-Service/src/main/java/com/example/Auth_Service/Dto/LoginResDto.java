@@ -2,20 +2,14 @@ package com.example.Auth_Service.Dto;
 
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class LoginResDto {
-    private String token;
+    private String accesstoken;
 
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public LoginResDto(String token) {
-        this.token = token;
-    }
+    private String status;
 }

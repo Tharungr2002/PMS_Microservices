@@ -34,10 +34,10 @@ public class UserController {
         Optional<String> Optionaltoken = authservice.Authenticate(loginreqdto);
 
         if(Optionaltoken.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new LoginResDto("","Failed"));
         }
         String token = Optionaltoken.get();
-        return ResponseEntity.ok(new LoginResDto(token));
+        return ResponseEntity.ok(new LoginResDto(token , "Sucess"));
     }
 
     @GetMapping("/validate")
