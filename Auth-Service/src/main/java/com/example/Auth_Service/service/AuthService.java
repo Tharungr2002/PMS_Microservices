@@ -5,6 +5,7 @@ import com.example.Auth_Service.Dto.SignupDto;
 import com.example.Auth_Service.Enum.role;
 import com.example.Auth_Service.Model.User;
 import com.example.Auth_Service.Repository.UserRepo;
+import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -50,10 +51,10 @@ public class AuthService {
         return Optional.empty();
     }
 
-    public boolean validateToken(String token) {
+    public Claims validateToken(String token) {
         try{
-            jwtutil.validateToken(token);
-            return true;
+            Claims claims = jwtutil.validateToken(token);
+            return claims;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

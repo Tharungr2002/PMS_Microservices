@@ -1,5 +1,6 @@
 package com.example.Auth_Service.service;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -23,9 +24,9 @@ public class JwtUtil {
                 compact();
     }
 
-    public void validateToken(String token) throws Exception {
+    public Claims validateToken(String token) throws Exception {
         try{
-            Jwts.parser().setSigningKey(SECRET_KEY.getBytes()).build().parseClaimsJws(token);
+            return Jwts.parser().setSigningKey(SECRET_KEY.getBytes()).build().parseClaimsJws(token).getBody();
         }catch(Exception e){
             throw new Exception("Wrong jwt");
         }

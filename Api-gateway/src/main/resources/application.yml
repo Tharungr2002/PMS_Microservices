@@ -14,9 +14,23 @@ spring:
           filters:
             - ApiKeyValidation
 
-        - id : patient-service
+        - id: patient-service-foradmin
           uri: http://localhost:4000
           predicates:
-            - Path=/patient/**
+            - Path=/patients/admin/**
           filters:
-            - JwtValidation
+            - name: JwtValidation
+              args:
+                allowedRoles: "ADMIN"
+
+        - id : patient-service-forpatients
+          uri: http://localhost:4000
+          predicates:
+            - Path=/patients/**
+          filters:
+            - name: JwtValidation
+              args:
+                allowedRoles: "USER"
+
+
+

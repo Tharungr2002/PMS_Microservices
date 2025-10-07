@@ -36,14 +36,14 @@ public class patientController {
     }
 
     //get all patients by admin
-    @GetMapping
+    @GetMapping("/admin/getall")
     public ResponseEntity<List<patientResponseDto>> getAllpatients() {
         List<patientResponseDto> patients = patientservice.getAllpatients();
         return ResponseEntity.ok().body(patients);
     }
 
     //creating patients by admin
-    @PostMapping
+    @PostMapping("/admin/create")
     public ResponseEntity<patientResponseDto> createPatient(@Valid @RequestBody patientRequestDto patientrequestdto) {
         patientResponseDto createpatientresdto = patientservice.createPatient(patientrequestdto);
         return ResponseEntity.ok().body(createpatientresdto);
@@ -51,21 +51,21 @@ public class patientController {
 
 
     //editing patients by admin
-    @PutMapping("/{id}")
+    @PutMapping("/admin/{id}")
     public ResponseEntity<patientResponseDto> updatePatient(@PathVariable UUID id, @RequestBody patientRequestDto patientrequestdto) {
         patientResponseDto patientresponsedto = patientservice.updatePatient(id,patientrequestdto);
         return ResponseEntity.ok().body(patientresponsedto);
     }
 
     //deleting patient by admin
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/admin/delete/{id}")
     public ResponseEntity<Void> deletePatient(@PathVariable UUID id) {
         patientservice.deleteByID(id);
         return ResponseEntity.noContent().build();
     }
 
     //Search with name (For small scale products) with pageable(admin)
-    @GetMapping("/search")
+    @GetMapping("/admin/search")
     public ResponseEntity<Page<patientResponseDto>> getByName(@RequestParam String name,
                                               @RequestParam int pageno,
                                               @RequestParam int size) {
@@ -74,7 +74,7 @@ public class patientController {
     }
 
     //get all patients phonenumber and mail by patientId
-    @PostMapping("/getAll/contacts")
+    @PostMapping("/admin/getAll/contacts")
     public ResponseEntity<List<PatientContacts>> getAllPatientsContacts(@RequestBody List<CronAptPatientNotification> cronAptPatientNotification) {
         List<PatientContacts> contacts = patientservice.getAllPatientContacts(cronAptPatientNotification);
         return ResponseEntity.ok(contacts);

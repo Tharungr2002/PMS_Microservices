@@ -5,8 +5,10 @@ import com.example.Auth_Service.Dto.LoginResDto;
 import com.example.Auth_Service.Dto.SignupDto;
 import com.example.Auth_Service.Repository.UserRepo;
 import com.example.Auth_Service.service.AuthService;
+import io.jsonwebtoken.Claims;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +23,9 @@ public class UserController {
 
     @Autowired
     private UserRepo repo;
+
+    @Value("${apikey}")
+    private String api_key;
 
     //only for patients
     @PostMapping("/signup")
@@ -42,14 +47,19 @@ public class UserController {
     }
 
     @GetMapping("/validate")
-    public ResponseEntity<Void> validateToken(@RequestHeader("Authorization") String token) {
+    public ResponseEntity<Claims> validateToken(@RequestHeader("Authorization") String token , @RequestHeader("X-Api-key") String apikey) {
+        if(!apikey.equals(api_key)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
         if( (token == null) || !token.startsWith("Bearer ") ) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-        if(authservice.validateToken(token.substring(7))) {
-            return ResponseEntity.ok().build();
-        }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+
+        Claims claim = authservice.validateToken(token.substring(7));
+
+        return ResponseEntity.ok(claim);
+
     }
 
 }
