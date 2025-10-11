@@ -52,10 +52,10 @@ public class patientService {
         System.out.println(newPatient.getId());
 
         //grpc request
-//        System.out.println(billinggrcpclient.createBillingAccount(newPatient.getId().toString(), newPatient.getName()));
-//
-//        //kakfa to analytical services
-//        Kakfaproducer.sendingToAnalyticalService(newPatient);
+        //System.out.println(billinggrcpclient.createBillingAccount(newPatient.getId().toString(), newPatient.getName()));
+
+        // Send Notific for patient create
+        Kakfaproducer.sendToNotServicePatientCreate(newPatient);
 
         return patientMapper.patientMapping(newPatient);
     }
@@ -74,6 +74,11 @@ public class patientService {
     }
 
     public void deleteByID(UUID id) {
+
+        Patient patient = patientrepository.findById(id).orElseThrow(()-> new RuntimeException("patient did not found"));
+
+        Kakfaproducer.sendToNotServicePatientDelete(patient);
+
         patientrepository.deleteById(id);
     }
 

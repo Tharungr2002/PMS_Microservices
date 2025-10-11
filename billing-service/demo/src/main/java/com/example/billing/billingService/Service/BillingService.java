@@ -144,6 +144,7 @@ public class BillingService {
 
         });
 
+        //payment update to patient via mail.
 
         return billRepository.save(bill);
 

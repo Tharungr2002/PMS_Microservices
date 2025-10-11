@@ -16,14 +16,15 @@ public class kakfaproducer {
         this.kafkatemplate = kafkatemplate;
     }
 
-    public void sendingToAnalyticalService(Patient patient) {
+    public void sendToNotServicePatientCreate(Patient patient) {
         PatientEvent newpatient = PatientEvent.newBuilder().setPatientId(patient.getId().toString())
                 .setName(patient.getName())
                 .setEmail(patient.getEmail())
+                .setPhoneno(patient.getPhoneNumber())
                 .setEventType("PATIENT_CREATED")
                 .build();
         try{
-            kafkatemplate.send("patient-event",newpatient.toByteArray());
+            kafkatemplate.send("patient-create-eventpatient-create-event",newpatient.toByteArray());
         }catch(Exception e) {
             System.out.println(e.getMessage());
         }
@@ -31,4 +32,17 @@ public class kakfaproducer {
     }
 
 
+    public void sendToNotServicePatientDelete(Patient patient) {
+        PatientEvent newpatient = PatientEvent.newBuilder().setPatientId(patient.getId().toString())
+                .setName(patient.getName())
+                .setEmail(patient.getEmail())
+                .setPhoneno(patient.getPhoneNumber())
+                .setEventType("PATIENT_CREATED")
+                .build();
+        try{
+            kafkatemplate.send("patient-delete-event",newpatient.toByteArray());
+        }catch(Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }

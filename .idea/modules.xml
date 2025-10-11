@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/AppointmentService/AppointmentService.iml" filepath="$PROJECT_DIR$/AppointmentService/AppointmentService.iml" />
+      <module fileurl="file://$PROJECT_DIR$/NotificationService/NotificationService.iml" filepath="$PROJECT_DIR$/NotificationService/NotificationService.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/PMS.iml" filepath="$PROJECT_DIR$/.idea/PMS.iml" />
       <module fileurl="file://$PROJECT_DIR$/analyticalserive/analyticalserive.iml" filepath="$PROJECT_DIR$/analyticalserive/analyticalserive.iml" />
       <module fileurl="file://$PROJECT_DIR$/patientManagementSystem/patient-service/patientManagementSystem.iml" filepath="$PROJECT_DIR$/patientManagementSystem/patient-service/patientManagementSystem.iml" />
