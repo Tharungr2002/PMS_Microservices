@@ -54,7 +54,7 @@ spring:
         - id: Appointment-service-admin-only-route
           uri: http://localhost:5555
           predicates:
-            - Path=/admin/**
+            - Path=/adminonly/**
           filters:
             - name: JwtValidation
               args:
@@ -72,21 +72,29 @@ spring:
 
 #######################################################################################
 
-#        - id: Billing-service-admin-only-route
-#          uri: http://localhost:8080
-#          predicates:
-#            -Path=/prescription/doctor/**
-#          filter:
-#            -name: JwtValidation
-#            args:
-#              allowedRoles: "DOCTOR"
-#
-#        - id: Billing-service-admin-only-route
-#          uri: http://localhost:8080
-#          predicates:
-#            -Path=/bill/admin/**
-#            -Path=/admin/**
-#          filter:
-#            -name: JwtValidation
-#            args:
-#              allowedRoles: "ADMIN"
+        - id: Billing-Prescription-service-admin-only-route
+          uri: http://localhost:3000
+          predicates:
+            - Path=/prescription/doctor/**
+          filters:
+            - name: JwtValidation
+              args:
+                allowedRoles: "DOCTOR"
+
+        - id: Billing-service-admin-only-route
+          uri: http://localhost:3000
+          predicates:
+            - Path=/admin/inventory/**
+          filters:
+            - name: JwtValidation
+              args:
+                allowedRoles: "ADMIN"
+
+        - id: Billing-service-Billadmin-only-route
+          uri: http://localhost:3000
+          predicates:
+            - Path=/bill/admin/**
+          filters:
+            - name: JwtValidation
+              args:
+                allowedRoles: "ADMIN"

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("admin/bodycheck")
+@RequestMapping("admin/inventory/bodycheck")
 public class BodyCheckController {
 
     @Autowired
