@@ -13,7 +13,7 @@ spring:
             - Path=/auth/**
           filters:
             - ApiKeyValidation
-
+#####################################################################################
         - id: patient-service-foradmin
           uri: http://localhost:4000
           predicates:
@@ -32,5 +32,61 @@ spring:
               args:
                 allowedRoles: "USER"
 
+#######################################################################################
+        - id: Appointment-service-patientAdmin-only-route
+          uri: http://localhost:5555
+          predicates:
+            - Path=/admin/patient/**
+          filters:
+            - name: JwtValidation
+              args:
+                allowedRoles: "ADMIN,USER"
+
+        - id: Appointment-service-patientdoctor-only-route
+          uri: http://localhost:5555
+          predicates:
+            - Path=/admin/doctor/**
+          filters:
+            - name: JwtValidation
+              args:
+                allowedRoles: "ADMIN,DOCTOR"
+
+        - id: Appointment-service-admin-only-route
+          uri: http://localhost:5555
+          predicates:
+            - Path=/admin/**
+          filters:
+            - name: JwtValidation
+              args:
+                allowedRoles: "ADMIN"
+
+        - id: Appointment-service-admin-only-route
+          uri: http://localhost:5555
+          predicates:
+            - Path=/specialization/**
+          filters:
+            - name: JwtValidation
+              args:
+                allowedRoles: "ADMIN"
 
 
+#######################################################################################
+
+#        - id: Billing-service-admin-only-route
+#          uri: http://localhost:8080
+#          predicates:
+#            -Path=/prescription/doctor/**
+#          filter:
+#            -name: JwtValidation
+#            args:
+#              allowedRoles: "DOCTOR"
+#
+#        - id: Billing-service-admin-only-route
+#          uri: http://localhost:8080
+#          predicates:
+#            -Path=/bill/admin/**
+#            -Path=/admin/**
+#          filter:
+#            -name: JwtValidation
+#            args:
+#              allowedRoles: "ADMIN"

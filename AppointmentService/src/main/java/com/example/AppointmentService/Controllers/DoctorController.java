@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/doctor")
 public class DoctorController {
     @Autowired
     private DoctorService doctorservice;
@@ -25,7 +24,7 @@ public class DoctorController {
     private CronService cronCheck;
 
     //return all slots of doctor. by admin
-    @GetMapping("/getAllSlot/{DoctorName}")
+    @GetMapping("admin/getAllSlot/{DoctorName}")
     public ResponseEntity<List<AvailableSlots>> returnAllSlots(@PathVariable String DoctorName) {
 
         List<AvailableSlots> allSlots = doctorservice.returnAllSlots(DoctorName);
@@ -34,7 +33,7 @@ public class DoctorController {
     }
 
     //creating doctor by doctor or admin
-    @PostMapping("/create")
+    @PostMapping("admin/doctor/create")
     public ResponseEntity<doctorDto> createDoctorDetails(@RequestHeader("X-loginId-Headers")String loginId,
                                                          @RequestHeader("X-Name-Headers") String name ,
                                                          @RequestBody doctorDto doctordto) {
@@ -43,21 +42,21 @@ public class DoctorController {
     }
 
     //deleting doctor by admin or doctor
-    @DeleteMapping("/delete/{loginId}")
+    @DeleteMapping("admin/doctor/delete/{loginId}")
     public ResponseEntity<Void> deleteDoctorByLoginId(@PathVariable String loginId) {
         doctorservice.deleteDoctor(loginId);
         return ResponseEntity.noContent().build();
     }
 
     //patient is searching for doctor by specialization
-    @GetMapping("/getDoctorBySpec/{specialization}")
+    @GetMapping("admin/patient/getDoctorBySpec/{specialization}")
     public ResponseEntity<List<DoctorNameResponse>> getDoctorBySpecialization(@PathVariable String specialization) {
         List<DoctorNameResponse> allSpec = doctorservice.getBySpec(specialization);
         return ResponseEntity.ok(allSpec);
     }
 
     //Doctor is creating his slots
-    @PostMapping("/createSlot/{loginId}")
+    @PostMapping("admin/doctor/createSlot/{loginId}")
     public ResponseEntity<List<DoctorSlotCreation>> createSlot(@PathVariable String loginId,
                                                                @RequestBody DoctorSlotCreation doctorSlotCreation) {
 
@@ -66,7 +65,7 @@ public class DoctorController {
     }
 
     //If patient select doctor, should return available slots.
-    @GetMapping("getAvailSlot/{doctorName}")
+    @GetMapping("admin/patient/getAvailSlot/{doctorName}")
     public ResponseEntity<List<AvailableSlots>> getAvailableSlots(@PathVariable String doctorName) {
 
         List<AvailableSlots> slots = doctorservice.getAllAvailableSlots(doctorName);
@@ -77,14 +76,14 @@ public class DoctorController {
 
 
 
-    @PostMapping("/appointment")
+    @PostMapping("admin/patient/appointment")
     public ResponseEntity<AppointmentResponse> bookAppointment(@RequestBody AvailableSlots availableSlots,
                                                                @RequestHeader("X-PatientId") String patientId) {
         AppointmentResponse appointmentResponse = doctorservice.bookAppointment(availableSlots,patientId);
         return ResponseEntity.ok(appointmentResponse);
     }
 
-    @GetMapping("/get/appointment/booked/{status}")
+    @GetMapping("admin/patient/get/appointment/booked/{status}")
     public ResponseEntity<List<AppointmentBooked>> getAllAppointment(@RequestHeader("X-PatientId") String patientId ,@PathVariable String status) {
 
         List<AppointmentBooked> appointmentBooked = doctorservice.GetAllBookedAppointmentByPatient(patientId , status);
@@ -92,7 +91,7 @@ public class DoctorController {
     }
 
 
-    @PostMapping("/cancel/appointment")
+    @PostMapping("admin/patient/cancel/appointment")
     public ResponseEntity<String> cancelAppointment(@RequestBody CancelAppointmentRequest cancelAppointmentRequest) {
 
         String response = doctorservice.CancelAppointment(cancelAppointmentRequest);

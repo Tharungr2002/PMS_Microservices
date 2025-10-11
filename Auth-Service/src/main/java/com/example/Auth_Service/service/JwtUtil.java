@@ -7,6 +7,7 @@ import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Component;
 
 
+import java.sql.SQLOutput;
 import java.util.Date;
 
 @Component
@@ -26,9 +27,10 @@ public class JwtUtil {
 
     public Claims validateToken(String token) throws Exception {
         try{
+            System.out.println("-------------" + token);
             return Jwts.parser().setSigningKey(SECRET_KEY.getBytes()).build().parseClaimsJws(token).getBody();
         }catch(Exception e){
-            throw new Exception("Wrong jwt");
+            throw new Exception("Wrong jwt" , e);
         }
     }
 

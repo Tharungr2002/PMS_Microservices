@@ -17,7 +17,7 @@ public class PrescriptionController {
     private PrescriptionService prescriptionService;
 
 
-    @PostMapping("/create")
+    @PostMapping("doctor/create")
     public ResponseEntity<PrescriptionResponse> createPrescription(@RequestBody List<PrescriptionRequest> prescriptionRequest ,
                                                                          @RequestHeader("X-PatientId") String patientid ,
                                                                          @RequestHeader("X-DoctorId") String doctorId ,

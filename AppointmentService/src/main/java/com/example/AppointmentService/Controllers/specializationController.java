@@ -19,14 +19,14 @@ public class specializationController {
     private specializationService specializationservice;
 
     //add doctor specialization by admin
-    @PostMapping("/add")
+    @PostMapping("admin/add")
     public ResponseEntity<specializationDb> addSpecializtion(@RequestBody specializationDb specializationdb) {
         specializationDb newSpec = specializationservice.addSpecialization(specializationdb);
         return ResponseEntity.ok(newSpec);
     }
 
     //get all specialization by admin
-    @GetMapping("/getAll")
+    @GetMapping("admin/getAll")
     public ResponseEntity<List<specializationDbResponse>> getAll() {
         List<specializationDbResponse> allSpec = specializationservice.getAll();
         return ResponseEntity.ok(allSpec);

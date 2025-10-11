@@ -19,32 +19,32 @@ public class BillingController {
     @Autowired
     private BillingService billingService;
 
-    @PostMapping("/create")
+    @PostMapping("admin/create")
     public ResponseEntity<BillCreationResponse> createBillForPatient(@RequestBody BillCreationRequest billCreationRequest,
                                                                      @RequestHeader("X-prescriptionId") String prescriptionId) {
         BillCreationResponse response = billingService.createBillForPatient(billCreationRequest,prescriptionId);
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/get/{id}")
+    @GetMapping("admin/get/{id}")
     public ResponseEntity<Bill> getbillByid(@PathVariable String id) {
         Bill bill = billingService.getBillByBillId(id);
         return ResponseEntity.ok(bill);
     }
 
-    @GetMapping("/get/patient/{patientid}")
+    @GetMapping("admin/get/patient/{patientid}")
     public ResponseEntity<List<patientBill>> getAllBillForPatients(@PathVariable String patientid) {
         List<patientBill> response = billingService.getAllBillForPatients(patientid);
         return ResponseEntity.ok(response);
     }
 
-    @PutMapping("/update/payment/{billId}/{method}")
+    @PutMapping("admin/update/payment/{billId}/{method}")
     public ResponseEntity<Bill> updatePaymentForBill(@PathVariable String billId , @PathVariable String method) {
         Bill bill = billingService.updateBill(billId,method);
         return ResponseEntity.ok(bill);
     }
 
-    @GetMapping("/get/billforprescription/{prescriptionId}")
+    @GetMapping("admin/get/billforprescription/{prescriptionId}")
     public ResponseEntity<List<Bill>> getAllBillForPrescription(@PathVariable String prescriptionId) {
 
         List<Bill> AllBills = billingService.getAllBills(prescriptionId);
