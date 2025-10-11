@@ -4,6 +4,7 @@ import com.example.patientServices.Service.patientService;
 import com.example.patientServices.dto.patientRequest.CronAptPatientNotification;
 import com.example.patientServices.dto.patientRequest.PatientReqByPatient;
 import com.example.patientServices.dto.patientRequest.patientRequestDto;
+import com.example.patientServices.dto.patinetResponse.PatientContact;
 import com.example.patientServices.dto.patinetResponse.PatientContacts;
 import com.example.patientServices.dto.patinetResponse.patientResponseDto;
 import jakarta.validation.Valid;
@@ -73,11 +74,18 @@ public class patientController {
         return ResponseEntity.ok().body(newPatient);
     }
 
-    //get all patients phonenumber and mail by patientId
+    //get all patients phonenumber and mail by patientId for cron job
     @PostMapping("/admin/getAll/contacts")
     public ResponseEntity<List<PatientContacts>> getAllPatientsContacts(@RequestBody List<CronAptPatientNotification> cronAptPatientNotification) {
         List<PatientContacts> contacts = patientservice.getAllPatientContacts(cronAptPatientNotification);
         return ResponseEntity.ok(contacts);
+    }
+
+    //get email and phonenumber by patientid internal api
+    @GetMapping("/admin/getcontact")
+    public ResponseEntity<PatientContact> getBypatientid(@RequestHeader("X-Patient-id") String patientid) {
+        PatientContact response = patientservice.getpatientdetails(patientid);
+        return ResponseEntity.ok(response);
     }
 
 

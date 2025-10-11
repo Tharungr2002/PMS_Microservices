@@ -1,6 +1,7 @@
 package com.example.patientServices.Repository;
 
 import com.example.patientServices.Model.Patient;
+import com.example.patientServices.dto.patinetResponse.PatientContact;
 import com.example.patientServices.dto.patinetResponse.PatientContacts;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,4 +25,9 @@ public interface patientRepository extends JpaRepository<Patient, UUID> {
     "WHERE p.id IN :uuids ")
     List<PatientContacts> findAllByIds(List<UUID> uuids);
 
+    @Query("SELECT new com.example.patientServices.dto.patinetResponse.PatientContact (" +
+            "p.email, p.phoneNumber ) " +
+            "FROM Patient p " +
+            "WHERE p.id = :uuid ")
+    PatientContact findByIdCustom(UUID uuid);
 }

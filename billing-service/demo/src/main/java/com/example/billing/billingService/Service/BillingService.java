@@ -2,12 +2,11 @@ package com.example.billing.billingService.Service;
 
 import com.example.billing.billingService.Enum.BillStatus;
 import com.example.billing.billingService.Enum.PaymentMethod;
+import com.example.billing.billingService.KafkaProducer.BillingPaymentService;
 import com.example.billing.billingService.Model.*;
 import com.example.billing.billingService.Repository.*;
-import com.example.billing.billingService.dto.BillCreationRequest;
-import com.example.billing.billingService.dto.BillCreationResponse;
-import com.example.billing.billingService.dto.Items;
-import com.example.billing.billingService.dto.patientBill;
+import com.example.billing.billingService.WebClient.PatientContactApi;
+import com.example.billing.billingService.dto.*;
 import com.example.billing.billingService.mapper.BillMapper;
 import com.google.j2objc.annotations.AutoreleasePool;
 import jakarta.transaction.Transactional;
@@ -23,6 +22,12 @@ import java.util.stream.Collectors;
 
 @Service
 public class BillingService {
+
+    @Autowired
+    private PatientContactApi patientContactApi;
+
+    @Autowired
+    private BillingPaymentService billingPayment;
 
     @Autowired
     private BillRepository billRepository;
@@ -144,7 +149,10 @@ public class BillingService {
 
         });
 
+        PatientContact response = patientContactApi.getContact(bill.getPatientid());
+
         //payment update to patient via mail.
+        billingPayment.SendToBillingPayment(bill , response.getEmail(), response.getPhonenumber());
 
         return billRepository.save(bill);
 

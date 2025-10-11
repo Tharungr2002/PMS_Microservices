@@ -7,6 +7,7 @@ import com.example.patientServices.Repository.patientRepository;
 import com.example.patientServices.dto.patientRequest.CronAptPatientNotification;
 import com.example.patientServices.dto.patientRequest.PatientReqByPatient;
 import com.example.patientServices.dto.patientRequest.patientRequestDto;
+import com.example.patientServices.dto.patinetResponse.PatientContact;
 import com.example.patientServices.dto.patinetResponse.PatientContacts;
 import com.example.patientServices.dto.patinetResponse.patientResponseDto;
 import com.example.patientServices.grpc.billingGrpcClient;
@@ -107,5 +108,11 @@ public class patientService {
 
         return PatientList;
 
+    }
+
+    public PatientContact getpatientdetails(String patientid) {
+
+        PatientContact response = patientrepository.findByIdCustom(UUID.fromString(patientid));
+        return response;
     }
 }

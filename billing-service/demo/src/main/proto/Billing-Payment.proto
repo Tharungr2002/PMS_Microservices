@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.example.billing";
+
+
+message BillingPayment {
+  string totalamount = 1;
+  string paidat = 2;
+  string paymentmethod = 3;
+  string prescriptionid = 4;
+  string email = 5;
+  string phoneno = 6;
+}

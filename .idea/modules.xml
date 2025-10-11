@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/NotificationService/NotificationService.iml" filepath="$PROJECT_DIR$/NotificationService/NotificationService.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/PMS.iml" filepath="$PROJECT_DIR$/.idea/PMS.iml" />
       <module fileurl="file://$PROJECT_DIR$/analyticalserive/analyticalserive.iml" filepath="$PROJECT_DIR$/analyticalserive/analyticalserive.iml" />
+      <module fileurl="file://$PROJECT_DIR$/billing-service/demo/demo.iml" filepath="$PROJECT_DIR$/billing-service/demo/demo.iml" />
       <module fileurl="file://$PROJECT_DIR$/patientManagementSystem/patient-service/patientManagementSystem.iml" filepath="$PROJECT_DIR$/patientManagementSystem/patient-service/patientManagementSystem.iml" />
     </modules>
   </component>

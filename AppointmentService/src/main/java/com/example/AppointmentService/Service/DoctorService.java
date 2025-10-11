@@ -10,7 +10,9 @@ import com.example.AppointmentService.Repository.AppointmentRepository;
 import com.example.AppointmentService.Repository.SlotRepository;
 import com.example.AppointmentService.Repository.SpecializationRepo;
 import com.example.AppointmentService.Repository.DoctorRepository;
+import com.example.AppointmentService.WebClient.PatientContactApi;
 import com.example.AppointmentService.dto.*;
+import com.example.AppointmentService.kakfProducer.AppointmentProducer;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,12 +20,16 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+
+
 @Service
 public class DoctorService {
+
+    @Autowired
+    private AppointmentProducer appointmentProducer;
 
     @Autowired
     private AppointmentRepository appointmentRepository;
@@ -36,6 +42,9 @@ public class DoctorService {
 
     @Autowired
     private SpecializationRepo specializationRepo;
+
+    @Autowired
+    private PatientContactApi patientContactApi;
 
     public doctorDto storeDoctorDetails(String loginId,String name, doctorDto doctordto) {
         UUID uuid = UUID.fromString(loginId);
@@ -168,7 +177,11 @@ public class DoctorService {
 
         Appointment saved = appointmentRepository.save(appointment);
 
+        //api call for patient contacts
+       PatientContact response = patientContactApi.getContact(patientId);
+
         //Email and sms to patient
+        appointmentProducer.BookAppointment(saved , response);
 
         return DoctorMapping.returnAppointment(saved);
     }
@@ -201,6 +214,11 @@ public class DoctorService {
 
         appointment.setStatus(AppointmentStatus.CANCELLED);
         appointmentRepository.save(appointment);
+
+        PatientContact response = patientContactApi.getContact(appointment.getPatientId().toString());
+
+        appointmentProducer.CancelAppointment(appointment , response);
+
 
         return "your Appointment with id : " + appointmentId + " is cancelled";
     }
