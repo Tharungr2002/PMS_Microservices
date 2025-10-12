@@ -24,7 +24,7 @@ public class kakfaproducer {
                 .setEventType("PATIENT_CREATED")
                 .build();
         try{
-            kafkatemplate.send("patient-create-eventpatient-create-event",newpatient.toByteArray());
+            kafkatemplate.send("patient-create-event",newpatient.toByteArray());
         }catch(Exception e) {
             System.out.println(e.getMessage());
         }

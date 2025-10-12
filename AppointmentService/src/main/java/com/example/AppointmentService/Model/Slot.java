@@ -25,6 +25,7 @@ public class Slot {
     private LocalDateTime endTime;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private SlotStatus slotStatus = SlotStatus.AVAILABLE;
 
     @ManyToOne
@@ -33,4 +34,5 @@ public class Slot {
 
     @OneToOne(mappedBy = "slot")
     private Appointment appointment;
+
 }

@@ -1,15 +1,12 @@
 package com.example.billing.billingService.WebClient;
 
 import com.example.billing.billingService.dto.PatientContact;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
+
+@Service
 public class PatientContactApi {
 
     @Autowired

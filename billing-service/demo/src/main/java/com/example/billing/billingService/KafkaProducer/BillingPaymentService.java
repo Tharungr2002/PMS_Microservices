@@ -20,6 +20,7 @@ public class BillingPaymentService {
                 .setPrescriptionid(bill.getPrescriptionId()).setEmail(email).setPhoneno(phoneno).build();
 
         try{
+            System.out.println("---------------------check");
             kafkaTemplate.send("Billing-Payment-confirmation",billpay.toByteArray());
         }catch(Exception e){
             throw new RuntimeException(e.getMessage());

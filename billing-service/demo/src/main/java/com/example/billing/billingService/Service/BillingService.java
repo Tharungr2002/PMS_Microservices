@@ -157,6 +157,8 @@ public class BillingService {
         Bill res = billRepository.save(bill);
 
         PatientContact response = patientContactApi.getContact(bill.getPatientid());
+
+        System.out.println(response.toString());
         //payment update to patient via mail.
         billingPayment.SendToBillingPayment(bill , response.getEmail(), response.getPhonenumber());
 

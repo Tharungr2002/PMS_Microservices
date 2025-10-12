@@ -9,10 +9,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.stereotype.Service;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
+@Service
 public class Billing {
 
     @Autowired
@@ -23,6 +22,8 @@ public class Billing {
 
     @KafkaListener(topics = "Billing-Payment-confirmation", groupId = "Bill-payment-confirm")
     public void ConsumeCreatePatient(byte[] event) {
+
+        System.out.println();
 
         try{
             BillingPayment bill = BillingPayment.parseFrom(event);

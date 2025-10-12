@@ -20,7 +20,10 @@ public class Patient {
     public void ConsumeCreatePatient(byte[] event) {
 
         try{
-            PatientEvent patient = PatientEvent.parseFrom(event);
+             PatientEvent patient = PatientEvent.parseFrom(event);
+
+            System.out.println("--------------------"+ patient.toString());
+
 
             String toEmail = patient.getEmail();
             String subject = "Reg Create Patient Id";
@@ -39,6 +42,8 @@ public class Patient {
 
         try{
             PatientEvent patient = PatientEvent.parseFrom(event);
+
+            System.out.println("--------------------"+ patient.toString());
 
             String toEmail = patient.getEmail();
             String subject = "Reg delete Patient Id";
