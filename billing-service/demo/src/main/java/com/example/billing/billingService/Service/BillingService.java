@@ -108,6 +108,7 @@ public class BillingService {
         return billIds;
     }
 
+    @Transactional
     public Bill updateBill(String billId, String method) {
 
         UUID billUUID = UUID.fromString(billId);
@@ -134,10 +135,13 @@ public class BillingService {
                 Medicine medicine = medicineRepository.findById(UUID.fromString(b.getMedicineId()))
                         .orElseThrow(() -> new RuntimeException("medicine did not found"));
 
+                b.setPaidStatus(true);
+
                 int availableStock = medicine.getStockAvailable();
 
                 if (availableStock < b.getQuantity()) {
-                    throw new RuntimeException("Stock not available !! please check again");
+                    throw new RuntimeException("Stock not available !! please check again for " +
+                            b.getName());
                 }
 
                 int updatedstock = availableStock - b.getQuantity();
@@ -149,12 +153,14 @@ public class BillingService {
 
         });
 
-        PatientContact response = patientContactApi.getContact(bill.getPatientid());
+        bill.setItems(billList);
+        Bill res = billRepository.save(bill);
 
+        PatientContact response = patientContactApi.getContact(bill.getPatientid());
         //payment update to patient via mail.
         billingPayment.SendToBillingPayment(bill , response.getEmail(), response.getPhonenumber());
 
-        return billRepository.save(bill);
+        return res;
 
     }
 

@@ -29,4 +29,6 @@ public class BillItem {
 
     private String name;
 
+    private boolean paidStatus = false;
+
 }
